@@ -1,0 +1,12 @@
+{
+  "name": "binary-brain",
+  "version": "1.0.0",
+  "description": "A talk about the humain brain and binary code",
+  "main": "index.html",
+  "author": "Thomas Jarrand",
+  "license": "MIT",
+  "dependencies": {
+    "faye-websocket": "^0.11.0",
+    "reveal.js": "^3.3.0"
+  }
+}

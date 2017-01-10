@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>The Binary Brain</title>
+
+        <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="node_modules/reveal.js/css/theme/black.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+
+        <style type="text/css">
+            .reveal section img.no-border {
+                border: none;
+                box-shadow: none;
+            }
+
+            .reveal section code.multiligne {
+                word-wrap: break-word;
+            }
+        </style>
+        <meta but-du-talk="Monter que manipuler des données binaire en JS c'est à portée de main.">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-background="#000000">
+                    <h1>The Binary Brain</h1>
+                    <img class="no-border" src="http://mri-scan-img.info/wp-content/uploads/2016/06/Brain-Mri-Ms.jpg">
+                </section>
+                <section>
+                    <section>
+                        <h2>IRM</h2>
+                    </section>
+                    <section>
+                        <h2>Image 3D / Voxel</h2>
+                    </section>
+                    <section>
+                        <h1>🤖</h1>
+                        <p>001100100100010101110101010011100101011010101011</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Le binaire</h2>
+                    </section>
+                    <section>
+                        <h3>0, 1, 10, 11, 100</h3>
+                    </section>
+                    <section>
+                        <h3 class="fragment">1 bit = 0 | 1</h3>
+                        <h3 class="fragment">1 octet = 8 bits = 10010110</h3>
+                        <h3 class="fragment">1 Ko = 1024 octets = 8192 bits</h3>
+                        <h3 class="fragment">1 GoT = 536,870,912 octets</h3>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Representer l'information</h2>
+                        <p>
+                            <span class="fragment highlight-red">00110010</span><span class="fragment highlight-blue">01000101</span><span class="fragment highlight-green">0000010101001110</span><span class="fragment highlight-red">01010110</span><span class="fragment highlight-blue">10101011</span>
+                        </p>
+                        <p>
+                            <span class="fragment highlight-red">50</span><span class="fragment highlight-blue">69</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-red">86</span><span class="fragment highlight-blue">171</span>
+                        </p>
+                    </section>
+                    <section data-background="http://kingofwallpapers.com/adn/adn-008.jpg">
+                        <p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Manipuler du binaire en Javascript</h2>
+                    </section>
+                    <section>
+                        <h3>ArrayBuffer</h3>
+<pre><code class="hljs">const buffer = new ArrayBuffer(byteLength) // longeur en octet</code></pre>
+                    </section>
+                    <section>
+                        <h3>TypedArrays</h3>
+<pre><code class="hljs">var view = new Uint8Array(buffer)</code></pre>
+                    </section>
+                    <section>
+                        <h3>Recevoir des données existante</h3>
+                    </section>
+                    <section>
+                        <a href="https://developer.mozilla.org/en/docs/Web/API/FileReader">FileReader</a>
+<pre><code class="hljs js">const file = document.getElementById('my-file').files[0];
+const reader = new FileReader();
+const buffer = reader.readAsArrayBuffer(file);</code></pre>
+                    </section>
+                    <section>
+                        <a href="https://developer.mozilla.org/en/docs/Web/API/FileReader">WebSocket</a>
+<pre><code class="hljs js">const socket = new WebSocket('ws://localhost');
+socket.binaryType = 'arraybuffer';
+socket.send(buffer);
+// ---
+socket.on('message', (event) => { const buffer = event.data; })</code></pre>
+                    </section>
+                    <section>
+                        <h3>Post ver une API?</h3>
+                    </section>
+                </section>
+                <section>
+                    <h2>Pourquoi c'est rapide ?</h2>
+
+                    <h4>Json:<br><small>54 octets (54 charactères)</small></h4>
+                    <pre><code class="hjs json">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
+
+                    <h4>Binaire:<br><small>6 octets (1 + 1 + 2 + 2)</small></h4>
+                    <pre><code class="hjs">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
+
+                    <h4>Exemple de Agar.io</h4>
+                </section>
+                <section>
+                    <h2>La spec nifti-1</h2>
+                </section>
+            </div>
+        </div>
+
+        <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
+        <script src="node_modules/reveal.js/js/reveal.js"></script>
+
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+                overview: false,
+                help: false,
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    { src: 'node_modules/reveal.js/plugin/markdown/marked.js' },
+                    { src: 'node_modules/reveal.js/plugin/markdown/markdown.js' },
+                    { src: 'node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+        </script>
+    </body>
+</html>

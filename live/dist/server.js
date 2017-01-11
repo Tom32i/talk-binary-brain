@@ -3084,10 +3084,6 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	console.title = function (message) {
-	    console.log(message + ' ' + '-'.repeat(50 - message.length));
-	};
-
 	var AXIS = ['x', 'y', 'z'];
 
 	/**
@@ -3108,6 +3104,7 @@
 	        this.buffer = buffer;
 	        this.header = new DataView(buffer, 0, this.headerLength);
 	        this.body = this.getBodyView();
+	        this.cache = new Map();
 	    }
 
 	    _createClass(VolumeIO, [{
@@ -3181,15 +3178,33 @@
 	         *
 	         * @param {String} axis
 	         * @param {Number} position
+	         * @param {Number} buffer
 	         */
 
 	    }, {
 	        key: 'getSlice',
-	        value: function getSlice(axis, position, canvas) {
-	            if (position < 0 || position >= length) {
-	                throw new Error('Position \'' + position + '\' is invalid [0, ' + length + '[.');
+	        value: function getSlice(axis, position) {
+	            var key = axis + '-' + position;
+
+	            if (!this.cache.has(key)) {
+	                this.cache.set(key, this.renderSlice(axis, position));
 	            }
 
+	            return this.cache.get(key);
+	        }
+
+	        /**
+	         * Render slice
+	         *
+	         * @param {String} axis
+	         * @param {Number} position
+	         *
+	         * @return {ImageData}
+	         */
+
+	    }, {
+	        key: 'renderSlice',
+	        value: function renderSlice(axis, position) {
 	            var _getDimensions = this.getDimensions(axis),
 	                width = _getDimensions.width,
 	                height = _getDimensions.height,
@@ -3198,32 +3213,31 @@
 	                offsetHeight = _getDimensions.offsetHeight,
 	                offset = _getDimensions.offset;
 
+	            if (position < 0 || position >= length) {
+	                throw new Error('Position \'' + position + '\' is invalid [0, ' + length + '[.');
+	            }
+
+	            var buffer = new ImageData(width, height);
 	            var zOffset = position * offset;
-	            //const grid = [];
-	            canvas.setDimensions(width, height);
-	            var grid = canvas.context.createImageData(width, height);
-	            var i = 0;
 
-	            console.log(grid.data.length, width * height * 4);
-
-	            for (var row = 0; row < height; row++) {
+	            for (var i = 0, row = 0; row < height; row++) {
 	                var zyOffset = zOffset + (height - row) * offsetHeight;
 
 	                for (var col = 0; col < width; col++) {
 	                    var zyxOffset = zyOffset + col * offsetWidth;
 	                    var value = this.body[zyxOffset];
-	                    var color = Math.round(value / 762 * 255);
+	                    var color = Math.round(value / 1000 * 255);
 
-	                    grid.data[i] = color; // red
-	                    grid.data[i + 1] = color; // green
-	                    grid.data[i + 2] = color; // blue
-	                    grid.data[i + 3] = 255; // alpha
+	                    buffer.data[i] = color; // red
+	                    buffer.data[i + 1] = color; // green
+	                    buffer.data[i + 2] = color; // blue
+	                    buffer.data[i + 3] = 255; // alpha
 
 	                    i += 4;
 	                }
 	            }
 
-	            canvas.context.putImageData(grid, 0, 0);
+	            return buffer;
 	        }
 
 	        /**
@@ -3293,6 +3307,10 @@
 	                littleEndian = this.littleEndian;
 
 	            var headerBytes = new Uint8Array(buffer, 0, headerLength);
+
+	            console.title = function (message) {
+	                console.log(message + ' ' + '-'.repeat(50 - message.length));
+	            };
 
 	            console.title('header');
 	            console.log('0: sizeof_hdr', header.getUint16(0, littleEndian));

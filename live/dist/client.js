@@ -56,6 +56,10 @@
 
 	var _Request2 = _interopRequireDefault(_Request);
 
+	var _Navigator = __webpack_require__(5);
+
+	var _Navigator2 = _interopRequireDefault(_Navigator);
+
 	var _Canvas = __webpack_require__(4);
 
 	var _Canvas2 = _interopRequireDefault(_Canvas);
@@ -68,20 +72,20 @@
 	    function Client() {
 	        _classCallCheck(this, Client);
 
-	        this.socket = new WebSocket('ws://localhost:8032', 'websocket');
-	        this.canvas = new _Canvas2.default();
-	        this.volume = null;
-
-	        this.socket.binaryType = 'arraybuffer';
-
+	        this.slice = this.slice.bind(this);
 	        this.onOpen = this.onOpen.bind(this);
 	        this.onMessage = this.onMessage.bind(this);
 	        this.onFileLoaded = this.onFileLoaded.bind(this);
 
+	        this.socket = new WebSocket('ws://localhost:8032', 'websocket');
+	        this.canvas = new _Canvas2.default();
+	        this.navigator = new _Navigator2.default(this.slice.bind(this));
+	        this.volume = null;
+
+	        this.socket.binaryType = 'arraybuffer';
+
 	        this.socket.addEventListener('open', this.onOpen);
 	        this.socket.addEventListener('message', this.onMessage);
-
-	        document.body.appendChild(this.canvas.element);
 
 	        this.request = new _Request2.default('brain.nii', this.onFileLoaded, function (error) {
 	            return console.error(error);
@@ -109,12 +113,32 @@
 	            console.log('Voxel: ' + voxel + ' octets');
 	            console.log('Body: ' + this.volume.body.length);
 
+	            this.navigator.setMaxs(x - 1, y - 1, z - 1);
+
 	            //this.volume.debug();
 	            //this.volume.debugView();
-	            console.time('slice');
-	            var slice = this.volume.getSlice('x', 88, this.canvas);
-	            console.timeEnd('slice');
+	            this.slice('x', Math.round(x / 2));
 	        }
+
+	        /**
+	         * Display a slice
+	         *
+	         * @param {String} axis
+	         * @param {Number} index
+	         */
+
+	    }, {
+	        key: 'slice',
+	        value: function slice(axis, index) {
+	            this.canvas.load(this.volume.getSlice(axis, index));
+	        }
+
+	        /**
+	         * On message
+	         *
+	         * @param {Event} event
+	         */
+
 	    }, {
 	        key: 'onMessage',
 	        value: function onMessage(event) {
@@ -151,10 +175,6 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	console.title = function (message) {
-	    console.log(message + ' ' + '-'.repeat(50 - message.length));
-	};
-
 	var AXIS = ['x', 'y', 'z'];
 
 	/**
@@ -175,6 +195,7 @@
 	        this.buffer = buffer;
 	        this.header = new DataView(buffer, 0, this.headerLength);
 	        this.body = this.getBodyView();
+	        this.cache = new Map();
 	    }
 
 	    _createClass(VolumeIO, [{
@@ -248,15 +269,33 @@
 	         *
 	         * @param {String} axis
 	         * @param {Number} position
+	         * @param {Number} buffer
 	         */
 
 	    }, {
 	        key: 'getSlice',
-	        value: function getSlice(axis, position, canvas) {
-	            if (position < 0 || position >= length) {
-	                throw new Error('Position \'' + position + '\' is invalid [0, ' + length + '[.');
+	        value: function getSlice(axis, position) {
+	            var key = axis + '-' + position;
+
+	            if (!this.cache.has(key)) {
+	                this.cache.set(key, this.renderSlice(axis, position));
 	            }
 
+	            return this.cache.get(key);
+	        }
+
+	        /**
+	         * Render slice
+	         *
+	         * @param {String} axis
+	         * @param {Number} position
+	         *
+	         * @return {ImageData}
+	         */
+
+	    }, {
+	        key: 'renderSlice',
+	        value: function renderSlice(axis, position) {
 	            var _getDimensions = this.getDimensions(axis),
 	                width = _getDimensions.width,
 	                height = _getDimensions.height,
@@ -265,32 +304,31 @@
 	                offsetHeight = _getDimensions.offsetHeight,
 	                offset = _getDimensions.offset;
 
+	            if (position < 0 || position >= length) {
+	                throw new Error('Position \'' + position + '\' is invalid [0, ' + length + '[.');
+	            }
+
+	            var buffer = new ImageData(width, height);
 	            var zOffset = position * offset;
-	            //const grid = [];
-	            canvas.setDimensions(width, height);
-	            var grid = canvas.context.createImageData(width, height);
-	            var i = 0;
 
-	            console.log(grid.data.length, width * height * 4);
-
-	            for (var row = 0; row < height; row++) {
+	            for (var i = 0, row = 0; row < height; row++) {
 	                var zyOffset = zOffset + (height - row) * offsetHeight;
 
 	                for (var col = 0; col < width; col++) {
 	                    var zyxOffset = zyOffset + col * offsetWidth;
 	                    var value = this.body[zyxOffset];
-	                    var color = Math.round(value / 762 * 255);
+	                    var color = Math.round(value / 1000 * 255);
 
-	                    grid.data[i] = color; // red
-	                    grid.data[i + 1] = color; // green
-	                    grid.data[i + 2] = color; // blue
-	                    grid.data[i + 3] = 255; // alpha
+	                    buffer.data[i] = color; // red
+	                    buffer.data[i + 1] = color; // green
+	                    buffer.data[i + 2] = color; // blue
+	                    buffer.data[i + 3] = 255; // alpha
 
 	                    i += 4;
 	                }
 	            }
 
-	            canvas.context.putImageData(grid, 0, 0);
+	            return buffer;
 	        }
 
 	        /**
@@ -360,6 +398,10 @@
 	                littleEndian = this.littleEndian;
 
 	            var headerBytes = new Uint8Array(buffer, 0, headerLength);
+
+	            console.title = function (message) {
+	                console.log(message + ' ' + '-'.repeat(50 - message.length));
+	            };
 
 	            console.title('header');
 	            console.log('0: sizeof_hdr', header.getUint16(0, littleEndian));
@@ -656,10 +698,9 @@
 
 	        this.element = element;
 	        this.context = this.element.getContext('2d');
-	        this.context.imageSmoothingEnabled = false;
-	        this.context.mozImageSmoothingEnabled = false;
-	        this.context.webkitImageSmoothingEnabled = false;
-	        this.context.msImageSmoothingEnabled = false;
+	        this.scale = 4;
+
+	        this.attach();
 	    }
 
 	    /**
@@ -673,46 +714,39 @@
 	    _createClass(Canvas, [{
 	        key: 'setDimensions',
 	        value: function setDimensions(width, height) {
+	            if (this.element.width === width && this.element.height === height) {
+	                return null;
+	            }
+
 	            this.element.width = width;
 	            this.element.height = height;
-	            this.element.style.width = width * 4 + 'px';
-	            this.element.style.height = height * 4 + 'px';
+	            this.element.style.width = width * this.scale + 'px';
+	            this.element.style.height = height * this.scale + 'px';
+	            this.context.globalCompositeOperation = 'copy';
+	            this.context.imageSmoothingEnabled = false;
 	        }
 
 	        /**
-	         * Set opacity
+	         * Load image data
 	         *
-	         * @param {Float} opacity
+	         * @param {ImageData} imageData
 	         */
 
 	    }, {
-	        key: 'setOpacity',
-	        value: function setOpacity(opacity) {
-	            this.context.globalAlpha = opacity;
+	        key: 'load',
+	        value: function load(imageData) {
+	            this.setDimensions(imageData.width, imageData.height);
+	            this.context.putImageData(imageData, 0, 0);
 	        }
 
 	        /**
-	         * Set fill color
-	         *
-	         * @param {String} color
+	         * Attach to DOM
 	         */
 
 	    }, {
-	        key: 'setFill',
-	        value: function setFill(color) {
-	            this.context.fillStyle = color;
-	        }
-
-	        /**
-	         * Set stroke color
-	         *
-	         * @param {String} color
-	         */
-
-	    }, {
-	        key: 'setStroke',
-	        value: function setStroke(color) {
-	            this.context.strokeStyle = color;
+	        key: 'attach',
+	        value: function attach() {
+	            document.body.appendChild(this.element);
 	        }
 	    }]);
 
@@ -720,6 +754,94 @@
 	}();
 
 	exports.default = Canvas;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Navigator = function () {
+	    function Navigator(callback) {
+	        _classCallCheck(this, Navigator);
+
+	        this.onChange = this.onChange.bind(this);
+
+	        this.callback = callback;
+	        this.x = this.getSlider('x', 100);
+	        this.y = this.getSlider('y', 100);
+	        this.z = this.getSlider('z', 100);
+
+	        this.attach();
+	    }
+
+	    _createClass(Navigator, [{
+	        key: 'onChange',
+	        value: function onChange(event) {
+	            var _event$target = event.target,
+	                name = _event$target.name,
+	                value = _event$target.value;
+
+
+	            this.callback(name, value);
+	        }
+	    }, {
+	        key: 'setMaxs',
+	        value: function setMaxs(x, y, z) {
+	            this.x.max = x;
+	            this.y.max = y;
+	            this.z.max = z;
+	        }
+	    }, {
+	        key: 'getSlider',
+	        value: function getSlider(name, max) {
+	            var step = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+	            var min = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+	            var element = document.createElement('input');
+
+	            element.type = 'range';
+	            element.name = name;
+	            element.min = min;
+	            element.max = max;
+	            element.step = step;
+
+	            element.addEventListener('input', this.onChange);
+
+	            return element;
+	        }
+
+	        /**
+	         * Attach to DOM
+	         */
+
+	    }, {
+	        key: 'attach',
+	        value: function attach() {
+	            var container = document.createElement('div');
+
+	            container.id = 'navigator';
+
+	            container.appendChild(this.x);
+	            container.appendChild(this.y);
+	            container.appendChild(this.z);
+
+	            document.body.appendChild(container);
+	        }
+	    }]);
+
+	    return Navigator;
+	}();
+
+	exports.default = Navigator;
 
 /***/ }
 /******/ ]);

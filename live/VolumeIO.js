@@ -1,6 +1,5 @@
-console.title = function(message) { console.log(message + ' ' + '-'.repeat(50 - message.length)); }
-
 import DATATYPES from './datatypes';
+
 const AXIS = ['x', 'y', 'z'];
 
 /**
@@ -18,6 +17,7 @@ class VolumeIO {
         this.buffer = buffer;
         this.header = new DataView(buffer, 0, this.headerLength);
         this.body = this.getBodyView();
+        this.cache = new Map();
     }
 
     get x() { return this.header.getUint16(42, this.littleEndian); }
@@ -83,39 +83,54 @@ class VolumeIO {
      *
      * @param {String} axis
      * @param {Number} position
+     * @param {Number} buffer
      */
-    getSlice(axis, position, canvas) {
+    getSlice(axis, position) {
+        const key = `${axis}-${position}`;
+
+        if (!this.cache.has(key)) {
+            this.cache.set(key, this.renderSlice(axis, position));
+        }
+
+        return this.cache.get(key);
+    }
+
+    /**
+     * Render slice
+     *
+     * @param {String} axis
+     * @param {Number} position
+     *
+     * @return {ImageData}
+     */
+    renderSlice(axis, position) {
+        const { width, height, length, offsetWidth, offsetHeight, offset } = this.getDimensions(axis);
+
         if (position < 0 || position >= length) {
             throw new Error(`Position '${position}' is invalid [0, ${length}[.`);
         }
 
-        const { width, height, length, offsetWidth, offsetHeight, offset } = this.getDimensions(axis);
+        const buffer = new ImageData(width, height);
         const zOffset = position * offset;
-        //const grid = [];
-        canvas.setDimensions(width, height);
-        const grid = canvas.context.createImageData(width, height);
-        let i = 0;
 
-        console.log(grid.data.length, width * height * 4);
-
-        for (let row = 0; row < height; row++) {
+        for (let i = 0, row = 0; row < height; row++) {
             const zyOffset = zOffset + (height - row) * offsetHeight;
 
             for (let col = 0; col < width; col++) {
                 const zyxOffset = zyOffset + col * offsetWidth;
                 const value = this.body[zyxOffset];
-                const color = Math.round((value / 762) * 255);
+                const color = Math.round((value / 1000) * 255);
 
-                grid.data[i]     = color; // red
-                grid.data[i + 1] = color; // green
-                grid.data[i + 2] = color; // blue
-                grid.data[i + 3] = 255;   // alpha
+                buffer.data[i]     = color; // red
+                buffer.data[i + 1] = color; // green
+                buffer.data[i + 2] = color; // blue
+                buffer.data[i + 3] = 255;   // alpha
 
                 i += 4;
             }
         }
 
-        canvas.context.putImageData(grid, 0, 0);
+        return buffer;
     }
 
     /**
@@ -171,6 +186,8 @@ class VolumeIO {
     debug() {
         const { buffer, header, headerLength, littleEndian } = this;
         const headerBytes = new Uint8Array(buffer, 0, headerLength);
+
+        console.title = function(message) { console.log(message + ' ' + '-'.repeat(50 - message.length)); }
 
         console.title('header');
         console.log('0: sizeof_hdr', header.getUint16(0, littleEndian));

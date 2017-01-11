@@ -2,10 +2,9 @@ class Canvas {
     constructor(element = document.createElement('canvas')) {
         this.element = element;
         this.context = this.element.getContext('2d');
-        this.context.imageSmoothingEnabled = false;
-        this.context.mozImageSmoothingEnabled = false;
-        this.context.webkitImageSmoothingEnabled = false;
-        this.context.msImageSmoothingEnabled = false;
+        this.scale = 4;
+
+        this.attach();
     }
 
     /**
@@ -15,37 +14,33 @@ class Canvas {
      * @param {Number} height
      */
     setDimensions(width, height) {
+        if (this.element.width === width && this.element.height === height) {
+            return null;
+        }
+
         this.element.width = width;
         this.element.height = height;
-        this.element.style.width = `${width * 4}px`;
-        this.element.style.height = `${height * 4}px`;
+        this.element.style.width = `${width * this.scale}px`;
+        this.element.style.height = `${height * this.scale}px`;
+        this.context.globalCompositeOperation = 'copy';
+        this.context.imageSmoothingEnabled = false;
     }
 
     /**
-     * Set opacity
+     * Load image data
      *
-     * @param {Float} opacity
+     * @param {ImageData} imageData
      */
-    setOpacity(opacity) {
-        this.context.globalAlpha = opacity;
+    load(imageData) {
+        this.setDimensions(imageData.width, imageData.height);
+        this.context.putImageData(imageData, 0, 0);
     }
 
     /**
-     * Set fill color
-     *
-     * @param {String} color
+     * Attach to DOM
      */
-    setFill(color) {
-        this.context.fillStyle = color;
-    }
-
-    /**
-     * Set stroke color
-     *
-     * @param {String} color
-     */
-    setStroke(color) {
-        this.context.strokeStyle = color;
+    attach() {
+        document.body.appendChild(this.element);
     }
 }
 

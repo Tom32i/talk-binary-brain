@@ -1,6 +1,7 @@
 import VolumeIO from './VolumeIO';
 import Request from './Request';
 import Navigator from './Navigator';
+import Cube from './Cube';
 import Canvas from './Canvas';
 
 class Client {
@@ -13,6 +14,7 @@ class Client {
         this.socket = new WebSocket('ws://localhost:8032', 'websocket');
         this.canvas = new Canvas();
         this.navigator = new Navigator(this.slice.bind(this));
+        this.cube = new Cube();
         this.volume = null;
 
         this.socket.binaryType = 'arraybuffer';
@@ -51,6 +53,7 @@ class Client {
      * @param {Number} index
      */
     slice(axis, index) {
+        this.cube.set(axis, index / this.volume[axis]);
         this.canvas.load(
             this.volume.getSlice(axis, index)
         );

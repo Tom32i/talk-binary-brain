@@ -53,6 +53,12 @@ class Server {
                 response.end(fs.readFileSync('index.html'));
                 break;
 
+            case '/style.css':
+            case '/cube.css':
+                response.writeHead(200, {'Content-Type': 'text/css'});
+                response.end(fs.readFileSync('.' + request.url));
+                break;
+
             case '/app.js':
                 response.writeHead(200, {'Content-Type': 'application/javascript'});
                 response.end(fs.readFileSync('dist/client.js'));

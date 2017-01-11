@@ -7,7 +7,6 @@ class Navigator {
         this.y = this.getSlider('y', 100);
         this.z = this.getSlider('z', 100);
 
-
         this.attach();
     }
 
@@ -43,7 +42,7 @@ class Navigator {
     attach() {
         const container = document.createElement('div');
 
-        container.id = 'navigator';
+        container.className = 'navigator';
 
         container.appendChild(this.x);
         container.appendChild(this.y);

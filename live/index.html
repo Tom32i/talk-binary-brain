@@ -2,88 +2,10 @@
 <html>
 <head>
     <title></title>
-    <style>
-        body {
-            background: black;
-            margin: 0;
-            padding: 0;
-        }
-        canvas {
-            background: black;
-            image-rendering: optimizeSpeed;
-            image-rendering: pixelated;
-            margin: 0 auto;
-            padding: 0;
-            display: block;
-        }
-        #navigator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin: 1em;
-        }
-        input[type="range"] {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cube.css">
 </head>
 <body>
     <script src="app.js"></script>
-<!--script>
-    const buffer = new ArrayBuffer();
-    const socket = new WebSocket('ws://localhost:8032', 'websocket');
-
-    socket.binaryType = 'arraybuffer';
-
-    socket.addEventListener('open', function onOpen() {
-        console.info('Socket open.');
-    });
-
-    socket.addEventListener('message', function onMessage(event) {
-        const { name, id, x, y } = readBuffer(event.data);
-
-        console.info(`Received ${name} [${x}, ${y}] for id ${id}.`);
-
-        console.info(`Sending ${name} [${x + 1}, ${y + 1}] for id ${id}.`);
-        socket.send(getBuffer(name, id, x + 1 ,y + 1));
-    });
-
-    function readBuffer(buffer) {
-        const eventView = new Uint8Array(buffer, 0, 1);
-        const idView = new Uint8Array(buffer, 1, 1);
-        const positionView = new Uint16Array(buffer, 2, 2);
-
-        return {
-            name: events[eventView[0]],
-            id: idView[0],
-            x: positionView[0],
-            y: positionView[1],
-        };
-    }
-
-    function getBuffer(name, id, x, y) {
-        const buffer = new ArrayBuffer(6);
-        const eventView = new Uint8Array(buffer, 0, 1);
-        const idView = new Uint8Array(buffer, 1, 1);
-        const positionView = new Uint16Array(buffer, 2, 2);
-
-        eventView[0] = events.indexOf(name);
-        idView[0] = id;
-        positionView[0] = x;
-        positionView[1] = y;
-
-        console.log(buffer);
-
-        return buffer;
-    }
-
-    /*socket.send(buffer);
-
-    const eventdata = new ArrayBuffer(1);
-    const eventView = new Uint8Array(eventdata, 0, 1);
-    const positiondata = new ArrayBuffer(4);
-    const eventView = new Uint8Array(eventdata, 0, 1);
-    const positionView = new Uint16Array(positiondata, 0, 2);*/
-</script-->
 </body>
 </html>

@@ -4,7 +4,9 @@
   "description": "Binary Brain in live",
   "main": "server.js",
   "scripts": {
-    "start": "webpack --watch"
+    "start": "node dist/server.js structural.nii",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "author": "Thomas Jarrand",
   "license": "MIT",

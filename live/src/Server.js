@@ -2,6 +2,7 @@ import fs from 'fs';
 import http from 'http';
 import WebSocket from 'faye-websocket';
 import Volume from './Volume';
+import Contributor from './Contributor';
 
 /**
  * Server
@@ -18,6 +19,7 @@ class Server {
         this.server = http.createServer();
         this.rawBuffer = fs.readFileSync(this.filename);
         this.volume = new Volume(new Uint8Array(this.rawBuffer).buffer);
+        this.contributors = [];
 
         this.onUpgrade = this.onUpgrade.bind(this);
         this.onRequest = this.onRequest.bind(this);
@@ -25,7 +27,7 @@ class Server {
         this.server.on('upgrade', this.onUpgrade);
         this.server.on('request', this.onRequest);
 
-        this.server.listen(port/*, 'localhost'*/);
+        this.server.listen(port);
 
         console.info(`Server listening on port ${port}`);
 
@@ -48,7 +50,8 @@ class Server {
      * @param {Object} head
      */
     onUpgrade(request, socket, head) {
-        const client = new WebSocket(request, socket, head, 'websocket');
+        const contributor = new Contributor(new WebSocket(request, socket, head, 'websocket'));
+        this.contributors.push(contributor);
         console.log('new client');
         //const x = Math.round(Math.random() * 1000);
         //const y = Math.round(Math.random() * 1000);

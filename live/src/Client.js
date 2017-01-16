@@ -23,12 +23,13 @@ class Client {
         this.navigator = new Navigator(this.setSlice);
         this.cube = new Cube();
         this.volume = null;
+        this.axis = 0;
 
         this.socket.binaryType = 'arraybuffer';
         this.socket.addEventListener('open', this.onOpen);
         this.socket.addEventListener('message', this.onMessage);
 
-        this.request = new Request('draw.nii', this.onFileLoaded, this.onError);
+        this.request = new Request('brain.nii', this.onFileLoaded, this.onError);
     }
 
     /**
@@ -55,17 +56,7 @@ class Client {
 
         this.navigator.setMaxs(x - 1, y - 1, z - 1);
 
-        console.log(this.volume.getOffset('x'));
-        console.log(this.volume.getOffset('y'));
-        console.log(this.volume.getOffset('z'));
-
-        this.volume.debug();
-        this.volume.debugView();
-        this.setSlice('y', Math.round(y / 2));
-
-        this.volume.getXYZOffset(0, 0, 0);
-        this.volume.getXYZOffset(0, 1, 0);
-        this.volume.getXYZOffset(0, 0, 1);
+        this.navigator.start();
     }
 
     /**

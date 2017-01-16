@@ -9,11 +9,15 @@ class Navigator {
      */
     constructor(callback) {
         this.onChange = this.onChange.bind(this);
+        this.next = this.next.bind(this);
 
         this.callback = callback;
         this.x = this.getSlider('x', 100);
         this.y = this.getSlider('y', 100);
         this.z = this.getSlider('z', 100);
+        this.sliders = [this.x, this.y, this.z];
+        this.current = 0;
+        this.interval = 0;
 
         this.attach();
     }
@@ -27,6 +31,39 @@ class Navigator {
         const { name, value } = event.target;
 
         this.callback(name, value);
+    }
+
+    start() {
+        if (!this.interval) {
+            this.interval = setInterval(this.next, 1000 / 30);
+        }
+    }
+
+    stop() {
+        if (this.interval) {
+            this.interval = null;
+            clearInterval(this.interval);
+        }
+    }
+
+    /**
+     * Nest
+     *
+     * @return {Function}
+     */
+    next() {
+        const slider = this.sliders[this.current];
+        const { value, max } = slider;
+        const end = value === max;
+
+        if (end) {
+            slider.value = 0;
+            this.current = this.current === this.sliders.length - 1 ? 0 : this.current + 1;
+        } else {
+            slider.value++;
+        }
+
+        slider.dispatchEvent(new Event('input'));
     }
 
     /**
@@ -60,6 +97,7 @@ class Navigator {
         element.min = min;
         element.max = max;
         element.step = step;
+        element.value = min;
 
         element.addEventListener('input', this.onChange);
 

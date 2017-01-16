@@ -7,6 +7,7 @@ class Volume {
 
     static get AXIS() { return ['x', 'y', 'z']; }
     static get HEADER_LENGTH() { return 352; }
+    static get MAX() { return 1000; }
 
     /**
      * Constructor
@@ -18,6 +19,7 @@ class Volume {
         this.buffer = buffer;
         this.header = new DataView(buffer, 0, Volume.HEADER_LENGTH);
         this.cache = new Map();
+        this.body = autoload ? this.createBodyView() : null;
     }
 
     /**
@@ -33,14 +35,13 @@ class Volume {
     static create(x, y, z, TypedArray) {
         const bytePerVoxel = TypedArray.BYTES_PER_ELEMENT;
         const byteLength = Volume.HEADER_LENGTH + x * y * z * bytePerVoxel;
+        const index = Array.from(DATATYPES.values()).indexOf(TypedArray);
+        const dataType = Array.from(DATATYPES.keys())[index];
         const buffer = new ArrayBuffer(byteLength);
         const volume = new Volume(buffer, false);
 
-        volume.x = x;
-        volume.y = y;
-        volume.z = z;
-        volume.bitPerVoxel = bytePerVoxel * 8;
-        volume.dataType = DATATYPES.keys()[Array.from(DATATYPES.values()).indexOf(TypedArray)];
+        volume.setDefaultHeader(x, y, z, bytePerVoxel * 8, dataType);
+        volume.body = volume.createBodyView();
 
         return volume;
     }
@@ -49,17 +50,12 @@ class Volume {
     get y() { return this.header.getUint16(44, this.littleEndian); }
     get z() { return this.header.getUint16(46, this.littleEndian); }
 
-    set x(value) { this.header.setUint16(42, this.littleEndian, value); }
-    set y(value) { this.header.setUint16(44, this.littleEndian, value); }
-    set z(value) { this.header.setUint16(46, this.littleEndian, value); }
-
     /**
      * Get byte per voxel
      *
      * @return {Number}
      */
     get bitPerVoxel() { return this.header.getUint16(72, this.littleEndian); }
-    set bitPerVoxel(value) { return this.header.setUint16(72, this.littleEndian, value); }
 
     /**
      * Get data type
@@ -67,21 +63,16 @@ class Volume {
      * @return {Number}
      */
     get dataType() { return this.header.getUint16(70, this.littleEndian); }
-    set dataType(value) { return this.header.setUint16(70, this.littleEndian, value); }
 
     /**
-     * Get (and create) body view
+     * Create body view
      *
      * @return {TypedArray}
      */
-    get body() {
-        if (!this.bodyView) {
-            const TypedArray = DATATYPES.get(this.dataType);
+    createBodyView() {
+        const TypedArray = DATATYPES.get(this.dataType);
 
-            this.bodyView = new TypedArray(this.buffer, Volume.HEADER_LENGTH);
-        }
-
-        return this.bodyView;
+        return new TypedArray(this.buffer, Volume.HEADER_LENGTH);
     }
 
     /**
@@ -125,7 +116,7 @@ class Volume {
             for (let col = 0; col < width; col++) {
                 const zyxOffset = zyOffset + (width - col) * offsetWidth;
                 const value = this.body[zyxOffset];
-                const color = Math.round((value / 700) * 255);
+                const color = Math.round((value / Volume.MAX) * 255);
 
                 buffer.data[i++] = color; // red
                 buffer.data[i++] = color; // green
@@ -192,6 +183,98 @@ class Volume {
         }
 
         return offset;
+    }
+
+    setDefaultHeader(x, y, z, bitPerVoxel, datatype, min = 0, max = 255) {
+        console.log(x, y, z, bitPerVoxel, datatype, min, max);
+
+        const { header, littleEndian, buffer } = this;
+
+        // Set header size: sizeof_hdr
+        header.setUint32(0, 348, littleEndian);
+
+        // Set number of dimensions: dim 3|4
+        header.setUint16(40, 3, littleEndian);
+
+        // Set dimensions (x, y, z, (time))
+        header.setUint16(42, x, littleEndian);
+        header.setUint16(44, y, littleEndian);
+        header.setUint16(46, z, littleEndian);
+        header.setUint16(48, 1, littleEndian);
+        header.setUint16(50, 1, littleEndian);
+        header.setUint16(52, 1, littleEndian);
+        header.setUint16(54, 1, littleEndian);
+
+        // Set data type: http://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields/nifti1fields_pages/datatype.html
+        header.setUint16(70, datatype, littleEndian);
+        // Set bit per voxel: http://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields/nifti1fields_pages/bitpix.html
+        header.setUint16(72, bitPerVoxel, littleEndian);
+
+        console.log('setDefaultHeader', arguments);
+
+        // Set steps (x, y, z, time) : pixdim
+        header.setFloat32(76, 1, littleEndian);
+        header.setFloat32(80, 1, littleEndian);
+        header.setFloat32(84, 1, littleEndian);
+        header.setFloat32(88, 1, littleEndian);
+        header.setFloat32(92, 0, littleEndian);
+
+        // Set voxel offset: vox_offset
+        header.setFloat32(108, Volume.HEADER_LENGTH, littleEndian);
+
+        // Set data scaling: scl_slope and scl_inter
+        header.setFloat32(112, 1, littleEndian);
+        header.setFloat32(116, 0, littleEndian);
+
+        // Units: millimeters
+        header.setUint16(122, 512, littleEndian)
+        header.setUint16(123, 2, littleEndian)
+
+        // Set intensity (max, min)
+        header.setFloat32(124, max, littleEndian);
+        header.setFloat32(128, min, littleEndian);
+
+        // 3d image (volume) orientation and location in space: qform_code and sform_code
+        header.setUint16(252, 2, littleEndian);
+        header.setUint16(254, 1, littleEndian);
+
+        // Transform
+        const transform = [
+          [ 1, 0, 0, -0],
+          [ 0, 1, 0, -0],
+          [ 0, 0, 1, -0],
+        ];
+
+        // Qform
+        header.setFloat32(256, 0, littleEndian);
+        header.setFloat32(260, 0, littleEndian);
+        header.setFloat32(264, 0, littleEndian);
+        header.setFloat32(268, transform[0][3], littleEndian);
+        header.setFloat32(272, transform[1][3], littleEndian);
+        header.setFloat32(276, transform[2][3], littleEndian);
+
+        // Sform
+        header.setFloat32(280, transform[0][0], littleEndian);
+        header.setFloat32(284, transform[0][1], littleEndian);
+        header.setFloat32(288, transform[0][2], littleEndian);
+        header.setFloat32(292, transform[0][3], littleEndian);
+        header.setFloat32(296, transform[1][0], littleEndian);
+        header.setFloat32(300, transform[1][1], littleEndian);
+        header.setFloat32(304, transform[1][2], littleEndian);
+        header.setFloat32(308, transform[1][3], littleEndian);
+        header.setFloat32(312, transform[2][0], littleEndian);
+        header.setFloat32(316, transform[2][1], littleEndian);
+        header.setFloat32(320, transform[2][2], littleEndian);
+        header.setFloat32(324, transform[2][3], littleEndian);
+
+        // Set magic number:
+        const magicByte = new Uint8Array(buffer, 344, 348);
+        const magic = 'n+1';
+        //const magicByte = bytes.subarray(344, 348);
+
+        for (var i = magic.length - 1; i >= 0; i--) {
+            magicByte[i] = magic.charCodeAt(i);
+        }
     }
 
     /**

@@ -34,15 +34,13 @@ class Server {
 
         console.info(`Serving file "${filename}" on port ${port}`);
 
-        const { x, y, z } = this.volume;
-        const voxel = this.volume.bitPerVoxel * 8;
+        console.info(`V Volume: ${this.volume.x} ⨉ ${this.volume.y} ⨉ ${this.volume.z}`);
+        console.info(`V Voxel: ${this.volume.bitPerVoxel} bits`);
+        console.info(`V Body: ${this.volume.body.length}`);
 
-        console.info(`Volume: ${x} ⨉ ${y} ⨉ ${z}`);
-        console.info(`Voxel: ${voxel} octets`);
-        console.info(`Body: ${this.volume.body.length}`);
-
-        this.draw.debug();
-        this.draw.debugView();
+        console.info(`V Volume: ${this.draw.x} ⨉ ${this.draw.y} ⨉ ${this.draw.z}`);
+        console.info(`V Voxel: ${this.draw.bitPerVoxel} bits`);
+        console.info(`V Body: ${this.draw.body.length}`);
     }
 
     /**

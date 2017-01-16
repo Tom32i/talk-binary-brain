@@ -73,11 +73,12 @@ class Canvas {
      *
      * @return {Number}
      */
-    getScale() {
+    getScale(precision = 3) {
         const { width, height } = this.element;
         const { innerWidth, innerHeight } = window;
+        const scale = Math.min(innerWidth, innerHeight) / Math.max(width, height);
 
-        return Math.floor(Math.min(innerWidth, innerHeight) / Math.max(width, height));
+        return Math.floor(scale * precision) / precision;
     }
 }
 

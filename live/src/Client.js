@@ -23,6 +23,7 @@ class Client {
         this.navigator = new Navigator(this.setSlice);
         this.cube = new Cube();
         this.volume = null;
+        this.axis = 0;
 
         this.socket.binaryType = 'arraybuffer';
         this.socket.addEventListener('open', this.onOpen);
@@ -47,17 +48,15 @@ class Client {
         this.volume = new Volume(buffer);
 
         const { x, y, z } = this.volume;
-        const voxel = this.volume.getBytePerVoxel();
+        const voxel = this.volume.bitPerVoxel * 8;
 
-        console.log(`Volume: ${x} ⨉ ${y} ⨉ ${z}`);
-        console.log(`Voxel: ${voxel} octets`);
-        console.log(`Body: ${this.volume.body.length}`);
+        console.info(`Volume: ${x} ⨉ ${y} ⨉ ${z}`);
+        console.info(`Voxel: ${voxel} octets`);
+        console.info(`Body: ${this.volume.body.length}`);
 
         this.navigator.setMaxs(x - 1, y - 1, z - 1);
 
-        //this.volume.debug();
-        //this.volume.debugView();
-        this.setSlice('x', Math.round(x / 2));
+        this.navigator.start();
     }
 
     /**

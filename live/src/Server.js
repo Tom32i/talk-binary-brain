@@ -2,6 +2,7 @@ import fs from 'fs';
 import http from 'http';
 import WebSocket from 'faye-websocket';
 import Volume from './Volume';
+import DATATYPES from './datatypes';
 
 /**
  * Server
@@ -14,30 +15,32 @@ class Server {
      * @param {Number} port
      */
     constructor(filename, port = 8032) {
-        this.filename = filename;
+        const rawBuffer = fs.readFileSync(filename);
+
         this.server = http.createServer();
-        this.rawBuffer = fs.readFileSync(this.filename);
-        this.volume = new Volume(new Uint8Array(this.rawBuffer).buffer);
+        this.volume = new Volume(new Uint8Array(rawBuffer).buffer);
+        this.draw = Volume.create(this.volume.x, this.volume.y, this.volume.z, Uint8Array);
 
         this.onUpgrade = this.onUpgrade.bind(this);
         this.onRequest = this.onRequest.bind(this);
 
+        this.volume.raw = rawBuffer;
+        this.draw.raw = new Buffer(this.draw.buffer);
+
         this.server.on('upgrade', this.onUpgrade);
         this.server.on('request', this.onRequest);
 
-        this.server.listen(port/*, 'localhost'*/);
+        this.server.listen(port);
 
-        console.info(`Server listening on port ${port}`);
+        console.info(`Serving file "${filename}" on port ${port}`);
 
-        const { x, y, z } = this.volume;
-        const voxel = this.volume.getBytePerVoxel();
+        console.info(`V Volume: ${this.volume.x} ⨉ ${this.volume.y} ⨉ ${this.volume.z}`);
+        console.info(`V Voxel: ${this.volume.bitPerVoxel} bits`);
+        console.info(`V Body: ${this.volume.body.length}`);
 
-        console.log(`Volume: ${x} ⨉ ${y} ⨉ ${z}`);
-        console.log(`Voxel: ${voxel} octets`);
-        console.log(`Body: ${this.volume.body.length}`);
-
-        this.volume.debug();
-        this.volume.debugView();
+        console.info(`V Volume: ${this.draw.x} ⨉ ${this.draw.y} ⨉ ${this.draw.z}`);
+        console.info(`V Voxel: ${this.draw.bitPerVoxel} bits`);
+        console.info(`V Body: ${this.draw.body.length}`);
     }
 
     /**
@@ -88,7 +91,12 @@ class Server {
 
             case '/brain.nii':
                 response.writeHead(200, {'Content-Type': 'application/octet-stream'});
-                response.end(this.rawBuffer);
+                response.end(this.volume.raw);
+                break;
+
+            case '/draw.nii':
+                response.writeHead(200, {'Content-Type': 'application/octet-stream'});
+                response.end(this.draw.raw);
                 break;
 
             default:

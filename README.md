@@ -24,12 +24,14 @@ Fichier nifty contien
 
 ### Representer l'information en binaire:
 
+pas de format "a priori"
+
 ### Exemple sécurité sociale
 
 189103815105037
 1 89 10 38 151 050 37
 
-Sexe (1|2), année naissance, mois naissance, departement, commune, ordre de naissance, clé de controle (97 - SOMME(1-13) % 97)
+Sexe (1|2), année naissance, mois naissance, departement, commune, ordre de naissance, clé de controle (97 - Nombre(1-13) % 97)
 
 Homme, né en Octobre 1989 dans l'Isère à Echirolles (50ème ce mois ci).
 

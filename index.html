@@ -11,8 +11,12 @@
 
         <!-- Theme used for syntax highlighting of code -->
         <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+        <!--link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"-->
 
         <style type="text/css">
+            .reveal section h1, .reveal section h2, .reveal section h3, .reveal section h4, .reveal section h5, .reveal section h6 {
+                font-family: "Open sans";
+            }
             .reveal section img.no-border {
                 border: none;
                 box-shadow: none;
@@ -20,6 +24,21 @@
 
             .reveal section code.multiligne {
                 word-wrap: break-word;
+            }
+
+            .reveal section .blocks {
+                display: block;
+                font-size: 0.7em;
+            }
+
+            .reveal section .blocks .block {
+                display: inline-block;
+                margin: 0 10px;
+            }
+
+            .reveal section iframe {
+                width: 100%;
+                height: 500px;
             }
         </style>
         <meta but-du-talk="Monter que manipuler des données binaire en JS c'est à portée de main.">
@@ -29,18 +48,32 @@
             <div class="slides">
                 <section data-background="#000000">
                     <h1>The Binary Brain</h1>
-                    <img class="no-border" src="http://mri-scan-img.info/wp-content/uploads/2016/06/Brain-Mri-Ms.jpg">
+                    <img class="no-border" src="img/intro.jpg">
+                </section>
+                <section>
+                    <section data-background="#5dbab6">
+                        <h2 style="color: white;">SPINE</h2>
+                        <!-- Besoins du serious game: dessiner dans le cerveau humain -->
+                        <!-- Crowdsourcer la recherche en neurologie -->
+                    </section>
                 </section>
                 <section>
                     <section>
                         <h2>IRM</h2>
+                        <small>Imagerie par Résonance Magnétique</small>
                     </section>
                     <section>
                         <h2>Image 3D / Voxel</h2>
+                        <!-- CSS 3D grid? -->
+                    </section>
+                    <section>
+                        <h2>Format Nifti-1</h2>
+                        <p>my_brain.nii</p>
                     </section>
                     <section>
                         <h1>🤖</h1>
                         <p>001100100100010101110101010011100101011010101011</p>
+                        <!-- Animation binaire qui se remplie ? -->
                     </section>
                 </section>
                 <section>
@@ -51,24 +84,49 @@
                         <h3>0, 1, 10, 11, 100</h3>
                     </section>
                     <section>
-                        <h3 class="fragment">1 bit = 0 | 1</h3>
+                        <h3 class="">1 bit = 0 ou 1</h3>
                         <h3 class="fragment">1 octet = 8 bits = 10010110</h3>
                         <h3 class="fragment">1 Ko = 1024 octets = 8192 bits</h3>
-                        <h3 class="fragment">1 GoT = 536,870,912 octets</h3>
+                        <!--h3 class="fragment">1 GoT = 536,870,912 octets</h3-->
                     </section>
                 </section>
                 <section>
                     <section>
                         <h2>Representer l'information</h2>
+                    </section>
+                    <section>
+                        <h3>8 bit pour 1 entier non-signé:</h3>
+                        <p>00000000 = 0</p>
+                        <p>11111111 = 255</p>
+                    </section>
+                    <section>
+                        <h3>16 bit pour 1 entier non-signé:</h3>
+                        <p>0000000000000000 = 0</p>
+                        <p>1111111111111111 = 65 535</p>
+                    </section>
+                    <!--section>
+                        <h3>1 bit pour 1 entier signé:</h3>
+                        <p>0 0000000 = -128</p>
+                        <p>1 1111111 = +127</p>
+                    </section-->
+                    <section>
+                        <!-- Une donnée binaire n'a pas de format a priori -->
+                        <!-- example d'un fichier lisible dans plusieurs format ?! -->
                         <p>
                             <span class="fragment highlight-red">00110010</span><span class="fragment highlight-blue">01000101</span><span class="fragment highlight-green">0000010101001110</span><span class="fragment highlight-red">01010110</span><span class="fragment highlight-blue">10101011</span>
                         </p>
-                        <p>
+                        <p class="fragment">
                             <span class="fragment highlight-red">50</span><span class="fragment highlight-blue">69</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-red">86</span><span class="fragment highlight-blue">171</span>
                         </p>
                     </section>
-                    <section data-background="http://kingofwallpapers.com/adn/adn-008.jpg">
-                        <p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p>
+                    <section>
+                        <h3>Numéro de sécurité social</h3>
+                        <p>
+                            <span class="fragment highlight-red">1</span><span class="fragment highlight-blue">89</span><span class="fragment highlight-green">10</span><span class="fragment highlight-red">38</span><span class="fragment highlight-blue">151</span><span class="fragment highlight-green">050</span><span class="fragment highlight-red">37</span>
+                        </p>
+                    </section>
+                    <section data-background="img/adn.jpg">
+                        <!--p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p-->
                     </section>
                 </section>
                 <section>
@@ -77,20 +135,69 @@
                     </section>
                     <section>
                         <h3>ArrayBuffer</h3>
-<pre><code class="hljs">const buffer = new ArrayBuffer(byteLength) // longeur en octet</code></pre>
+<pre><code class="hljs js">const buffer = new ArrayBuffer(byteLength)</code></pre>
                     </section>
                     <section>
                         <h3>TypedArrays</h3>
-<pre><code class="hljs">var view = new Uint8Array(buffer)</code></pre>
+<pre><code class="hljs js">const view = new Uint8Array(buffer)</code></pre>
                     </section>
+                    <section>
+<pre><code class="hljs js">const view = new Uint8Array(buffer)</code></pre>
+                        <p class="blocks">
+                            <span class="block">00110010</span>
+                            <span class="block">01000101</span>
+                            <span class="block">00000101</span>
+                            <span class="block">01001110</span>
+                            <span class="block">01010110</span>
+                            <span class="block">10101011</span>
+                        </p>
+<pre class="fragment"><code class="hljs js">[50, 69, 5, 78, 86, 171]</code></pre>
+<!--pre class="fragment"><code class="hljs js">view[2] = 50;</code></pre-->
+                    </section>
+                    <section>
+<pre><code class="hljs js">const view = new Uint16Array(buffer)</code></pre>
+                        <p class="blocks">
+                            <span class="block">0011001001000101</span>
+                            <span class="block">0000010101001110</span>
+                            <span class="block">0101011010101011</span>
+                        </p>
+<pre class="fragment"><code class="hljs js">[12869, 1358, 22187]</code></pre>
+                    </section>
+                    <section>
+                        <h3>Ecriture</h3>
+                        <p>Attention écriture nombre trop grand.</p>
+                    </section>
+                    <section>
+                        <h3>Autre utilitaires:</h3>
+                        <ul>
+                            <li>Découper ou coller des buffers</li>
+                            <li>Ouvrir une vue sur une portion précise du buffer</li>
+                            <li>Accès par pointer</li>
+                            <li>Manipulation logigue: décalage de bit</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Tableaux typé PHP ?!</h3>
+                    </section>
+                </section>
+                <section>
                     <section>
                         <h3>Recevoir des données existante</h3>
                     </section>
                     <section>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">XMLHttpRequest</a>
+<pre><code class="hljs js">const request = new XMLHttpRequest();
+request.addEventListener('load', function onLoad() {
+    const buffer = request.response;
+});
+request.responseType = 'arraybuffer';
+request.open('GET', 'http://my.brain.com/my_brain.nii');
+request.send();</code></pre>
+                    </section>
+                    <section>
                         <a href="https://developer.mozilla.org/en/docs/Web/API/FileReader">FileReader</a>
 <pre><code class="hljs js">const file = document.getElementById('my-file').files[0];
-const reader = new FileReader();
-const buffer = reader.readAsArrayBuffer(file);</code></pre>
+const buffer = new FileReader().readAsArrayBuffer(file);</code></pre>
                     </section>
                     <section>
                         <a href="https://developer.mozilla.org/en/docs/Web/API/FileReader">WebSocket</a>
@@ -100,23 +207,112 @@ socket.send(buffer);
 // ---
 socket.on('message', (event) => { const buffer = event.data; })</code></pre>
                     </section>
+                </section>
+                <section>
                     <section>
-                        <h3>Post ver une API?</h3>
+                        <h2>La spec Nifti-1</h2>
+                    </section>
+                    <section>
+                        <h3>Header sur 348 octets</h3>
+                        <p class="fragment">#40: Nombre de dimensions (3 ou 4 👽)</p>
+                        <p class="fragment">#42, #44, #46: Dimensions X, Y et Z</p>
+                        <p class="fragment">Information d'échelles, description, ect.</p>
+                    </section>
+                    <section>
+                        <h3>Body à partir de l'octet 352</h3>
+                        <p>"Les voxel, dans l'ordre"</p>
+                        <!-- Analogie du livre:
+                        soit un livre dont chaque ligne contient le même nombre de mot et chaque page le même nombre de ligne.
+                        Le 3ème mot de la ligne 5 de la page 127;
+                        const mot = numero + ligne * motParLigne + page * motParPage;
+                        motParPage = motParPage * ligneParPage;
+                        -->
+                        <p>const index = x + y * (X) + z * (X * Y)</p>
+                        <pre><code>[0,0,0][1,0,0][2,0,0]
+[0,1,0][1,1,0][2,1,0]
+[0,2,0][1,2,0][2,2,0]
+
+[0,0,1][1,0,1][2,0,1]
+[0,1,1][1,1,1][2,1,1]
+[0,2,1][1,2,1][2,2,1]
+
+[0,0,2][1,0,2][2,0,2]
+[0,1,2][1,1,2][2,1,2]
+[0,2,2][1,2,2][2,2,2]</code></pre>
+                    </section>
+                    <section>
+                        <iframe src="http://localhost:8032/"></iframe>
+                    </section>
+                    <!--section>
+                        Explication lecture ?
+                        - read buffer
+                        - Dataview: get info du header
+                        - UintArray: body
+                        - Calcul de la slice
+                        - Création de l'image
+                    </section-->
+                    <!--section>
+                        Explication écriture ?
+                        - create buffer
+                        - Dataview: set info du header
+                        - UintArray: body
+                        - Calcul de la slice
+                        - Création de l'image
+                    </section-->
+                    <!--section>
+                        Demo dans slicer ?
+                    </section-->
+                </section>
+                <section>
+                    <section>
+                        <h2>Pourquoi c'est rapide ?</h2>
+                    </section>
+                    <section>
+                        <h3>Le poids</h3>
+
+                        <h4>Json:<br><small>54 octets (54 charactères)</small></h4>
+                        <pre><code class="hjs json">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
+
+                        <h4>Binaire:<br><small>6 octets (1 + 1 + 2 + 2)</small></h4>
+                        <pre><code class="hjs">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
+                    </section>
+                    <section>
+                        <h3>Encodage / décodage</h3>
+                        <h4>Exemple de Agar.io</h4>
                     </section>
                 </section>
                 <section>
-                    <h2>Pourquoi c'est rapide ?</h2>
-
-                    <h4>Json:<br><small>54 octets (54 charactères)</small></h4>
-                    <pre><code class="hjs json">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
-
-                    <h4>Binaire:<br><small>6 octets (1 + 1 + 2 + 2)</small></h4>
-                    <pre><code class="hjs">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
-
-                    <h4>Exemple de Agar.io</h4>
+                    <section>
+                        <h2>Le bon</h2>
+                        <ul>
+                            <li>Poids</li>
+                            <li>Vitesse</li><!-- Ex: langue natal -->
+                            <li>Support</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Le moins bon</h2>
+                        <ul>
+                            <li>Rigoureux</li>
+                            <li>Debug</li>
+                            <li>Pas lisible</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Exemples d'utilisation</h3>
+                        <ul>
+                            <li>Supporter un format exterieur : nifti-1</li>
+                            <li>Réduire la consomation réseau et CPU d'un jeu temps réel</li>
+                            <li>Faire de la manipulation d'image avancée: instagram</li>
+                        </ul>
+                    </section>
                 </section>
                 <section>
-                    <h2>La spec nifti-1</h2>
+                    <h3>Sources et remerciements</h3>
+                    <p>Le projet Spine: AppStore?</p>
+                    <p>MDN: resources JS</p>
+                    <p><a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Spec nitfi-1</a></p>
+                    <!--p>Emeric</p-->
                 </section>
             </div>
         </div>

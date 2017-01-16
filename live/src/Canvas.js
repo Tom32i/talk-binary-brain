@@ -77,7 +77,7 @@ class Canvas {
         const { width, height } = this.element;
         const { innerWidth, innerHeight } = window;
 
-        return Math.floor(Math.min(innerWidth, innerHeight) / Math.max(width, height));
+        return /*Math.floor(*/Math.min(innerWidth, innerHeight) / Math.max(width, height)/*)*/;
     }
 }
 

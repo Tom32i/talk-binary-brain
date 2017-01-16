@@ -28,7 +28,7 @@ class Client {
         this.socket.addEventListener('open', this.onOpen);
         this.socket.addEventListener('message', this.onMessage);
 
-        this.request = new Request('brain.nii', this.onFileLoaded, this.onError);
+        this.request = new Request('draw.nii', this.onFileLoaded, this.onError);
     }
 
     /**
@@ -47,17 +47,25 @@ class Client {
         this.volume = new Volume(buffer);
 
         const { x, y, z } = this.volume;
-        const voxel = this.volume.getBytePerVoxel();
+        const voxel = this.volume.bitPerVoxel * 8;
 
-        console.log(`Volume: ${x} ⨉ ${y} ⨉ ${z}`);
-        console.log(`Voxel: ${voxel} octets`);
-        console.log(`Body: ${this.volume.body.length}`);
+        console.info(`Volume: ${x} ⨉ ${y} ⨉ ${z}`);
+        console.info(`Voxel: ${voxel} octets`);
+        console.info(`Body: ${this.volume.body.length}`);
 
         this.navigator.setMaxs(x - 1, y - 1, z - 1);
 
-        //this.volume.debug();
-        //this.volume.debugView();
-        this.setSlice('x', Math.round(x / 2));
+        console.log(this.volume.getOffset('x'));
+        console.log(this.volume.getOffset('y'));
+        console.log(this.volume.getOffset('z'));
+
+        this.volume.debug();
+        this.volume.debugView();
+        this.setSlice('y', Math.round(y / 2));
+
+        this.volume.getXYZOffset(0, 0, 0);
+        this.volume.getXYZOffset(0, 1, 0);
+        this.volume.getXYZOffset(0, 0, 1);
     }
 
     /**

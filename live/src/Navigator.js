@@ -9,6 +9,8 @@ class Navigator {
      */
     constructor(callback) {
         this.onChange = this.onChange.bind(this);
+        this.start = this.start.bind(this);
+        this.stop = this.stop.bind(this);
         this.next = this.next.bind(this);
 
         this.callback = callback;

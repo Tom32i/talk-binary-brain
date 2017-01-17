@@ -75,18 +75,12 @@ class Server {
         switch (request.url) {
             case '/':
                 response.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
-                response.end(fs.readFileSync('index.html'));
+                response.end(fs.readFileSync('../index.html'));
                 break;
 
-            case '/style.css':
-            case '/cube.css':
-                response.writeHead(200, {'Content-Type': 'text/css'});
-                response.end(fs.readFileSync('./style' + request.url));
-                break;
-
-            case '/app.js':
-                response.writeHead(200, {'Content-Type': 'application/javascript'});
-                response.end(fs.readFileSync('dist/client.js'));
+            case '/demo':
+                response.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
+                response.end(fs.readFileSync('demo.html'));
                 break;
 
             case '/brain.nii':
@@ -100,9 +94,35 @@ class Server {
                 break;
 
             default:
-                response.writeHead(404);
-                response.end();
+                const content = this.find(request.url);
+
+                if (content) {
+                    response.writeHead(200);
+                    response.end(content);
+                } else {
+                    response.writeHead(404);
+                    response.end();
+                }
                 break;
+        }
+    }
+
+    /**
+     * Find the given file from path
+     *
+     * @param {String} path
+     *
+     * @return {Resource}
+     */
+    find(path) {
+        try {
+            return fs.readFileSync('.' + path);
+        } catch (error) {
+            try {
+                return fs.readFileSync('..' + path);
+            } catch (error) {
+                return null;
+            }
         }
     }
 }

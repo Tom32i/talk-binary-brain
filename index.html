@@ -49,12 +49,14 @@
 
             .reveal section .blocks {
                 display: block;
-                font-size: 0.7em;
+                font-size: 0.8em;
+                letter-spacing: -2px;
+                font-family: monospace;
             }
 
             .reveal section .blocks .block {
                 display: inline-block;
-                margin: 0 10px;
+                margin: 0 5px;
             }
 
             .reveal section .emoji {
@@ -229,7 +231,7 @@
                         <p>0 0000000 = -128</p>
                         <p>1 1111111 = +127</p>
                     </section-->
-                    <section>
+                    <section data-background="#222222" style="color: white;">
                         <!-- Une donnée binaire n'a pas de format a priori -->
                         <!-- example d'un fichier lisible dans plusieurs format ?! -->
                         <p>
@@ -239,8 +241,8 @@
                             <span class="fragment highlight-red">50</span><span class="fragment highlight-blue">69</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-red">86</span><span class="fragment highlight-blue">171</span>
                         </p>
                     </section>
-                    <section>
-                        <h3>Numéro de sécurité social</h3>
+                    <section data-background="#222222" style="color: white;">
+                        <h3 style="color: white;">Numéro de sécurité social</h3>
                         <p>
                             <span class="fragment highlight-red">1</span><span class="fragment highlight-blue">89</span><span class="fragment highlight-green">10</span><span class="fragment highlight-red">38</span><span class="fragment highlight-blue">151</span><span class="fragment highlight-green">050</span><span class="fragment highlight-red">37</span>
                         </p>
@@ -311,8 +313,8 @@
                         <pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
                         <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 348);</code></pre>
                     </section>
-                    <section>
-                        <h3>Tableaux typé PHP ?!</h3>
+                    <section data-background="img/troll.jpg">
+                        <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
                         <pre><code class="hljs php center">$binary = pack("C*", 12, 255);
 $values = unpack("C*", $binary);</code></pre>
                     </section>
@@ -401,7 +403,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         motParPage = motParPage * ligneParPage;
                         -->
                     </section>
-                    <section>
+                    <section data-state="demo-end">
                         <p>Où se trouve l'information ?</p>
                         <pre><code class="hljs js">function getIndex(x, y, z) {
     return x + y * width + z * (width * height);
@@ -419,7 +421,8 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
 [0,1,2][1,1,2][2,1,2]
 [0,2,2][1,2,2][2,2,2]</pre-->
                     </section>
-                    <section data-background-iframe="http://localhost:8032/">
+                    <section data-background-iframe="/demo" data-state="demo">
+                        <span class="fragment"></span>
                     </section>
                     <!--section>
                         Explication lecture ?
@@ -441,7 +444,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         Demo dans slicer ?
                     </section-->
                 </section>
-                <section>
+                <section data-state="demo-end">
                     <section>
                         <h2>Pourquoi c'est rapide ?</h2>
                     </section>
@@ -510,13 +513,11 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
         <script src="node_modules/reveal.js/js/reveal.js"></script>
 
         <script>
-            // More info https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
                 history: true,
                 overview: false,
                 help: false,
 
-                // More info https://github.com/hakimel/reveal.js#dependencies
                 dependencies: [
                     { src: 'node_modules/reveal.js/plugin/markdown/marked.js' },
                     { src: 'node_modules/reveal.js/plugin/markdown/markdown.js' },
@@ -524,6 +525,17 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 ]
             });
 
+            function setDemo(demo) {
+                Reveal.addEventListener('demo', (e) => {
+                    demo.navigator.stop();
+                    demo.setSlice('x', Math.round(demo.volume.x / 2));
+                    Reveal.addEventListener('fragmentshown', demo.navigator.start);
+                });
+                Reveal.addEventListener('demo-end', (e) => {
+                    Reveal.removeEventListener('fragmentshown', demo.navigator.start);
+                    demo.navigator.stop();
+                });
+            }
 
             getRandomBinary(document.getElementById('binary'));
 

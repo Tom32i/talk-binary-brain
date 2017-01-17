@@ -56,7 +56,7 @@ class Client {
 
         this.navigator.setMaxs(x - 1, y - 1, z - 1);
 
-        this.navigator.start();
+        //this.navigator.start();
     }
 
     /**

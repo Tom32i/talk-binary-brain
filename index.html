@@ -11,7 +11,6 @@
 
         <!-- Theme used for syntax highlighting of code -->
         <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
-        <!--link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"-->
 
         <style type="text/css">
             .reveal section .none {
@@ -141,14 +140,14 @@
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
                     </section>
-                    <section data-background="img/spine-1.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#seriousGame</h2>
+                    <section data-background="img/spine-3.jpg">
+                        <h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2>
                     </section>
                     <section data-background="img/spine-2.jpg">
                         <h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2>
                     </section>
-                    <section data-background="img/spine-3.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2>
+                    <section data-background="img/spine-1.jpg">
+                        <h2 style="color: white; text-shadow: 0 0 5px black;">#seriousGame</h2>
                     </section>
                     <section data-background="#5dbab6" style="color: white;">
                         <quote>Analyser des IRM du cerveau<br/>par le grand public sur tablette</quote>
@@ -204,7 +203,7 @@
                         <p>1 infos => 1 nombre</p>
                     </section>
                     <section>
-                        <h3>Stoquer les nombres en binaire</h3>
+                        <h3>Stocker les nombres en binaire</h3>
                         <p>base 10 => base 2</p>
                     </section>
                     <section>
@@ -326,7 +325,7 @@ $values = unpack("C*", $binary);</code></pre>
                 </section>
                 <section>
                     <section>
-                        <h3>Recevoir des données existante</h3>
+                        <h3>Recevoir des données existantes</h3>
                     </section>
                     <section>
                         <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">XMLHttpRequest</a>
@@ -376,7 +375,7 @@ socket.on('message', (event) => { const buffer = event.data; })</code></pre>
                                 </tr>
                                 <tr class="fragment">
                                     <td><span class="badge">...</span></td>
-                                    <td>Information d'échelles, description, ect.</td>
+                                    <td>Information d'échelles, description, etc.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -389,7 +388,7 @@ const height = header.getUint16(44); // 256
 const depth  = header.getUint16(46); // 176
 const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <div class="fragment">
-                            <pre><code class="hljs js">const length = 352 + length * width * depth * bitPerVoxel / 8;</code></pre>
+                            <pre><code class="hljs js">const size = 352 + length * width * depth * bitPerVoxel / 8;</code></pre>
                             <p>46,1 Mo</p>
                         </div>
                     </section>
@@ -399,8 +398,8 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                     </section>
                     <section>
                         <h4>Manipuler le body</h4>
-                        <p>16 bit par voxel donc:</p>
-                        <pre><code class="hljs js center">const body = new UInt16Array(buffer, 352); </code></pre>
+                        <p>32 bit par voxel donc:</p>
+                        <pre><code class="hljs js center">const body = new Float32Array(buffer, 352); </code></pre>
                         <!-- Analogie du livre:
                         soit un livre dont chaque ligne contient le même nombre de mot et chaque page le même nombre de ligne.
                         Le 3ème mot de la ligne 5 de la page 127;
@@ -458,7 +457,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <h3>Le poids</h3>
 
                         <div>
-                            <h4>Json: <small style="vertical-align: middle;">54 octets (54 charactères)</small></h4>
+                            <h4>Json: <small style="vertical-align: middle;">54 octets (54 caractère)</small></h4>
                             <pre><code class="hjs json">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
                         </div>
 
@@ -536,7 +535,6 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
             function setDemo(demo) {
                 Reveal.addEventListener('demo', (e) => {
                     demo.navigator.stop();
-                    demo.setSlice('x', Math.round(demo.volume.x / 2));
                     Reveal.addEventListener('fragmentshown', demo.navigator.start);
                 });
                 Reveal.addEventListener('demo-end', (e) => {

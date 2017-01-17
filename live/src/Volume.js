@@ -186,8 +186,6 @@ class Volume {
     }
 
     setDefaultHeader(x, y, z, bitPerVoxel, datatype, min = 0, max = 255) {
-        console.log(x, y, z, bitPerVoxel, datatype, min, max);
-
         const { header, littleEndian, buffer } = this;
 
         // Set header size: sizeof_hdr
@@ -209,8 +207,6 @@ class Volume {
         header.setUint16(70, datatype, littleEndian);
         // Set bit per voxel: http://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields/nifti1fields_pages/bitpix.html
         header.setUint16(72, bitPerVoxel, littleEndian);
-
-        console.log('setDefaultHeader', arguments);
 
         // Set steps (x, y, z, time) : pixdim
         header.setFloat32(76, 1, littleEndian);

@@ -56,6 +56,7 @@ class Client {
 
         this.navigator.setMaxs(x - 1, y - 1, z - 1);
 
+        this.setSlice('x', Math.round(x / 2));
         //this.navigator.start();
     }
 

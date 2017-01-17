@@ -37,11 +37,8 @@ class Server {
 
         console.info(`V Volume: ${this.volume.x} ⨉ ${this.volume.y} ⨉ ${this.volume.z}`);
         console.info(`V Voxel: ${this.volume.bitPerVoxel} bits`);
+        console.info(`V DataType: ${DATATYPES.get(this.volume.dataType).name}`);
         console.info(`V Body: ${this.volume.body.length}`);
-
-        console.info(`V Volume: ${this.draw.x} ⨉ ${this.draw.y} ⨉ ${this.draw.z}`);
-        console.info(`V Voxel: ${this.draw.bitPerVoxel} bits`);
-        console.info(`V Body: ${this.draw.body.length}`);
     }
 
     /**

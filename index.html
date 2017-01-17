@@ -48,7 +48,7 @@
 
             .reveal section .blocks {
                 display: block;
-                font-size: 0.8em;
+                font-size: 0.7em;
                 letter-spacing: -2px;
                 font-family: monospace;
             }
@@ -246,13 +246,13 @@
                         </p>
                     </section>
                     <section data-background="#222222" style="color: white;">
-                        <h3 style="color: white;">Numéro de sécurité social</h3>
+                        <h3 style="color: white;">Numéro de sécurité sociale</h3>
                         <p>
-                            <span class="fragment highlight-red">1</span><span class="fragment highlight-blue">89</span><span class="fragment highlight-green">10</span><span class="fragment highlight-red">38</span><span class="fragment highlight-blue">151</span><span class="fragment highlight-green">050</span><span class="fragment highlight-red">37</span>
+                            <span class="fragment highlight-red">1</span><span class="fragment highlight-blue">89</span><span class="fragment highlight-green">10</span><span class="fragment highlight-red">38</span><span class="fragment highlight-blue">185</span><span class="fragment highlight-green">048</span><span class="fragment highlight-red">86</span>
                         </p>
                     </section>
                     <section>
-                        <quote>Une chaine binaire n'a pas de signification en soit.<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.</quote>
+                        <quote>Une chaine binaire n'a pas de signification en soit.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
                     </section>
                     <section data-background="img/adn.jpg">
                         <!--p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p-->
@@ -370,8 +370,11 @@ socket.on('message', (event) => { const buffer = event.data; })</code></pre>
                                     <td>Largeur, hauteur et profondeur</td>
                                 </tr>
                                 <tr class="fragment">
-                                    <td><span class="badge">72</span></td>
-                                    <td>Nombre de bit par voxel</td>
+                                    <td>
+                                        <span class="badge">70</span>
+                                        <span class="badge">72</span>
+                                    </td>
+                                    <td>DataType et Nombre de bit par voxel</td>
                                 </tr>
                                 <tr class="fragment">
                                     <td><span class="badge">...</span></td>
@@ -412,7 +415,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <pre><code class="hljs js">function getIndex(x, y, z) {
     return x + y * width + z * (width * height);
 }</code></pre>
-<pre class="fragment"><code class="hljs js">// numero + ligne * motParLigne + page * (motParLigne * ligneParPage)</code></pre>
+                        <p style="font-size: 0.75em;">numero + ligne &times; motParLigne + page &times; (motParLigne &times; ligneParPage)</p>
                         <!--pre class="fragment none center">[0,0,0][1,0,0][2,0,0]
 [0,1,0][1,1,0][2,1,0]
 [0,2,0][1,2,0][2,2,0]

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import http from 'http';
+import zlib from 'zlib';
 import WebSocket from 'faye-websocket';
 import Volume from './Volume';
 import DATATYPES from './datatypes';
@@ -24,8 +25,8 @@ class Server {
         this.onUpgrade = this.onUpgrade.bind(this);
         this.onRequest = this.onRequest.bind(this);
 
-        this.volume.raw = rawBuffer;
-        this.draw.raw = new Buffer(this.draw.buffer);
+        this.volume.raw = zlib.gzipSync(rawBuffer);
+        this.draw.raw = zlib.gzipSync(new Buffer(this.draw.buffer));
 
         this.server.on('upgrade', this.onUpgrade);
         this.server.on('request', this.onRequest);
@@ -84,12 +85,12 @@ class Server {
                 break;
 
             case '/brain.nii':
-                response.writeHead(200, {'Content-Type': 'application/octet-stream'});
+                response.writeHead(200, {'Content-Type': 'application/octet-stream', 'Content-Encoding': 'gzip'});
                 response.end(this.volume.raw);
                 break;
 
             case '/draw.nii':
-                response.writeHead(200, {'Content-Type': 'application/octet-stream'});
+                response.writeHead(200, {'Content-Type': 'application/octet-stream', 'Content-Encoding': 'gzip'});
                 response.end(this.draw.raw);
                 break;
 

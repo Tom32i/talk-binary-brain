@@ -20,6 +20,29 @@
                 box-shadow: none;
             }
 
+            .reveal section .ipad {
+                border: 1em solid black;
+                border-left-width: 2em;
+                border-right-width: 2em;
+                background: white;
+                box-shadow: none;
+                border-radius: 1em;
+                overflow: visible;
+                padding: 0em;
+                width: 20em;
+                height: 15em;
+                margin: 1em auto 0;
+                box-shadow: 0 0.1em 0 0 #333333;
+            }
+
+            .reveal section .ipad img {
+                margin: 0;
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+                max-height: 100%;
+            }
+
             .reveal section code.multiligne {
                 word-wrap: break-word;
             }
@@ -101,7 +124,7 @@
         <div class="reveal">
             <div class="slides">
                 <section data-background="#000000">
-                    <h1>The Binary Brain</h1>
+                    <h1 style="text-shadow: none; color: white;">The Binary Brain</h1>
                     <img class="none" src="img/intro.jpg">
                 </section>
                 <section>
@@ -110,15 +133,19 @@
                     </section>
                 </section>
                 <section>
-                    <section data-background="#5dbab6">
+                    <section data-background="#5dbab6" style="color: white;">
                         <h2 style="color: white;">SPINE</h2>
+                        <p>Université de Bordeaux &times; Harvard Medical School</p>
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
                         <p class="fragment">#Crowdsourcer la #recheche en Neurologie via un #seriousGame sur #mobile</p>
                     </section>
-                    <section>
-                        <p>Analyser des IRM du cerveau par le grand public sur tablette</p>
-                        <img src="" alt="Screenshot app iPAd">
+                    <section data-background="img/spine-1.jpg"></section>
+                    <section data-background="img/spine-2.jpg"></section>
+                    <section data-background="img/spine-3.jpg"></section>
+                    <section data-background="#5dbab6" style="color: white;">
+                        <quote>Analyser des IRM du cerveau par le grand public sur tablette</quote>
+                        <div class="ipad"><img class="none" src="img/spine-game.png"></div>
                     </section>
                 </section>
                 <section>

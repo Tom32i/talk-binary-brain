@@ -30,6 +30,14 @@ manala_deploy_copied:
   - live/node_modules
   - node_modules
 
+#########
+# Tasks #
+#########
+
+manala_deploy_tasks:
+  - make: install
+  - make: build
+
 ##########
 # Shared #
 ##########

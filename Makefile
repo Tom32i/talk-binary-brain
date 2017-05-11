@@ -3,12 +3,12 @@
 #########
 
 install:
-    yarn install
-    cd live && yarn install
+	yarn install
+	cd live && yarn install
 
 ## Build static files
 build:
-    cd live && yarn build
+	cd live && yarn build
 
 ##########
 # Deploy #
@@ -16,12 +16,12 @@ build:
 
 ## Install Ansible dependencies
 setup:
-    ansible-galaxy install -r requirements.yml -p roles -f
+	ansible-galaxy install -r ansible/requirements.yml -p ansible/roles -f
 
 ## Deploy application (demo)
 deploy@demo: setup
-    ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=demo
+	ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=deploy_demo
 
 ## Deploy application (prod)
-deploy@demo: setup
-    ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=prod
+deploy@prod: setup
+	ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=deploy_prod

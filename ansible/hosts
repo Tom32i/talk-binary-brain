@@ -1,0 +1,12 @@
+local ansible_ssh_host=deployer.dev ansible_ssh_user=tom32i
+dédié ansible_ssh_host=tom32i.fr ansible_ssh_user=tom32i
+
+[deploy_demo]
+local
+
+[deploy_prod]
+dédié
+
+[deploy:children]
+deploy_demo
+deploy_prod

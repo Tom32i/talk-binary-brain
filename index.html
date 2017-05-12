@@ -6,11 +6,11 @@
 
         <title>The Binary Brain</title>
 
-        <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
-        <link rel="stylesheet" href="node_modules/reveal.js/css/theme/beige.css">
+        <link rel="stylesheet" href="./node_modules/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="./node_modules/reveal.js/css/theme/beige.css">
 
         <!-- Theme used for syntax highlighting of code -->
-        <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+        <link rel="stylesheet" href="./node_modules/reveal.js/lib/css/zenburn.css">
 
         <style type="text/css">
             .reveal section .none {
@@ -126,7 +126,7 @@
             <div class="slides">
                 <section data-background="#000000">
                     <h1 style="text-shadow: none; color: white;">The Binary Brain</h1>
-                    <img class="none" src="img/intro.jpg">
+                    <img class="none" src="./img/intro.jpg">
                 </section>
                 <section>
                     <section>
@@ -140,18 +140,18 @@
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
                     </section>
-                    <section data-background="img/spine-3.jpg">
+                    <section data-background="./img/spine-3.jpg">
                         <h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2>
                     </section>
-                    <section data-background="img/spine-2.jpg">
+                    <section data-background="./img/spine-2.jpg">
                         <h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2>
                     </section>
-                    <section data-background="img/spine-1.jpg">
+                    <section data-background="./img/spine-1.jpg">
                         <h2 style="color: white; text-shadow: 0 0 5px black;">#seriousGame</h2>
                     </section>
                     <section data-background="#5dbab6" style="color: white;">
                         <quote>Analyser des IRM du cerveau<br/>par le grand public sur tablette</quote>
-                        <div class="ipad"><img class="none" src="img/spine-game.png"></div>
+                        <div class="ipad"><img class="none" src="./img/spine-game.png"></div>
                     </section>
                 </section>
                 <section>
@@ -159,11 +159,11 @@
                         <h2>IRM</h2>
                         <small>Imagerie par Résonance Magnétique</small>
                     </section>
-                    <section data-background="img/IRM.jpg"></section>
-                    <section data-background="img/IRM_result.jpg"></section>
+                    <section data-background="./img/IRM.jpg"></section>
+                    <section data-background="./img/IRM_result.jpg"></section>
                     <section>
                         <h2>Image Voxel</h2>
-                        <img class="none" src="img/rubik.png" style="max-height: 500px;">
+                        <img class="none" src="./img/rubik.png" style="max-height: 500px;">
                         <!-- CSS 3D grid? -->
                     </section>
                     <section>
@@ -190,7 +190,7 @@
                         <h3 class="fragment">1 Ko <span class="mutted">=</span> 1024 octets <span class="mutted">=</span> 8192 bits</h3>
                         <!--h3 class="fragment">1 GoT <span class="mutted">=</span> 536,870,912 octets</h3-->
                     </section>
-                    <section data-background="img/GOT.jpg">
+                    <section data-background="./img/GOT.jpg">
                         <h3 style="color: white;">536,870,912 octets</h3>
                     </section>
                 </section>
@@ -254,7 +254,7 @@
                     <section>
                         <quote>Une chaine binaire n'a pas de signification en soit.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
                     </section>
-                    <section data-background="img/adn.jpg">
+                    <section data-background="./img/adn.jpg">
                         <!--p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p-->
                     </section>
                 </section>
@@ -317,7 +317,7 @@
                         <pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
                         <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 348);</code></pre>
                     </section>
-                    <section data-background="img/troll.jpg">
+                    <section data-background="./img/troll.jpg">
                         <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
                         <pre><code class="hljs php center">$binary = pack("C*", 12, 255);
 $values = unpack("C*", $binary);</code></pre>
@@ -428,7 +428,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
 [0,1,2][1,1,2][2,1,2]
 [0,2,2][1,2,2][2,2,2]</pre-->
                     </section>
-                    <section data-background-iframe="/demo" data-state="demo">
+                    <section data-background-iframe="./demo" data-state="demo">
                         <span class="fragment"></span>
                     </section>
                     <!--section>
@@ -519,8 +519,8 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
             </div>
         </div>
 
-        <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
-        <script src="node_modules/reveal.js/js/reveal.js"></script>
+        <script src="./node_modules/reveal.js/lib/js/head.min.js"></script>
+        <script src="./node_modules/reveal.js/js/reveal.js"></script>
 
         <script>
             Reveal.initialize({
@@ -529,9 +529,9 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 help: false,
 
                 dependencies: [
-                    { src: 'node_modules/reveal.js/plugin/markdown/marked.js' },
-                    { src: 'node_modules/reveal.js/plugin/markdown/markdown.js' },
-                    { src: 'node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                    { src: './node_modules/reveal.js/plugin/markdown/marked.js' },
+                    { src: './node_modules/reveal.js/plugin/markdown/markdown.js' },
+                    { src: './node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
                 ]
             });
 

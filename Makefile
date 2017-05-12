@@ -10,6 +10,9 @@ install:
 build:
 	cd live && yarn build
 
+serve:
+	cd live && yarn start
+
 ##########
 # Deploy #
 ##########

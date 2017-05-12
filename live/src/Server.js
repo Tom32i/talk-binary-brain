@@ -16,6 +16,8 @@ class Server {
      * @param {Number} port
      */
     constructor(filename, port = 8032) {
+        console.info(`Launching server...`);
+
         const rawBuffer = fs.readFileSync(filename);
 
         this.server = http.createServer();
@@ -77,22 +79,25 @@ class Server {
                 break;
 
             case '/demo':
+            case '/demo/':
                 response.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
                 response.end(fs.readFileSync('demo.html'));
                 break;
 
             case '/brain.nii':
+            case '/demo/brain.nii':
                 response.writeHead(200, {'Content-Type': 'application/octet-stream', 'Content-Encoding': 'gzip'});
                 response.end(this.volume.raw);
                 break;
 
             case '/draw.nii':
+            case '/demo/draw.nii':
                 response.writeHead(200, {'Content-Type': 'application/octet-stream', 'Content-Encoding': 'gzip'});
                 response.end(this.draw.raw);
                 break;
 
             default:
-                const content = this.find(request.url);
+                const content = this.find(request.url.replace('/demo', ''));
 
                 if (content) {
                     response.writeHead(200);

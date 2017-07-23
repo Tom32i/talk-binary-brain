@@ -11,14 +11,14 @@ class Client {
     /**
      * Constructor
      */
-    constructor(host = document.location.hostname, port = 8032) {
+    constructor(host, secure = document.location.protocol === 'https:') {
         this.setSlice = this.setSlice.bind(this);
         this.onOpen = this.onOpen.bind(this);
         this.onMessage = this.onMessage.bind(this);
         this.onFileLoaded = this.onFileLoaded.bind(this);
         this.onError = this.onError.bind(this);
 
-        this.socket = new WebSocket(`ws://${host}:${port}`, 'websocket');
+        this.socket = new WebSocket(`${secure ? 'wss' : 'ws'}://${host}`, 'websocket');
         this.canvas = new Canvas();
         this.navigator = new Navigator(this.setSlice);
         this.cube = new Cube();

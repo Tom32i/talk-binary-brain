@@ -62,6 +62,18 @@
                 font-size: 2em;
             }
 
+            .reveal section .pixel {
+                width: 2em;
+                height: 2em;
+                display: inline-block;
+            }
+
+            .reveal section .pixel-big {
+                width: 4em;
+                height: 4em;
+                display: inline-block;
+            }
+
             .reveal section .mutted {
                 color: #888888;
             }
@@ -202,21 +214,26 @@
                         <h3>Numériser votre information</h3>
                         <p>1 infos => 1 nombre</p>
                     </section>
+                    <section data-background="#222222" style="color: white;">
+                        <h3 style="color: white;">Numéro de sécurité sociale</h3>
+                        <p>
+                            <span class="fragment highlight-red">1</span><span class="fragment highlight-blue">89</span><span class="fragment highlight-green">10</span><span class="fragment highlight-red">38</span><span class="fragment highlight-blue">185</span><span class="fragment highlight-green">048</span><span class="fragment highlight-red">86</span>
+                        </p>
+                    </section>
                     <section>
                         <h3>Stocker les nombres en binaire</h3>
                         <p>base 10 => base 2</p>
                     </section>
                     <section>
-                       <h3>Représenter une image en binaire (bitmap)</h3>
-                       <ul>
-                            <li class="fragment">Une liste de pixel</li>
-                            <li class="fragment">1 pixel = 1 couleur</li>
-                            <li class="fragment">1 couleur = 3 entiers de 0 à 255 (RVB)</li>
-                       </ul>
+                       <h3>Représenter une image en binaire</h3>
+                       <img src="./img/doomguy.jpg">
                     </section>
                     <section>
-                        <quote>16 million couleurs</quote>
-                        <p>256 * 256 * 256 = 16,777,216</p>
+                       <ul>
+                            <li class="fragment">Une grille de pixel (bitmap)</li>
+                            <li class="fragment">1 pixel = 1 couleur</li>
+                            <li class="fragment">1 couleur = 3 entiers (RVB) de 0 à 255</li>
+                       </ul>
                     </section>
                     <section>
                         <h3>Entier sur 8 bit</h3>
@@ -225,10 +242,8 @@
                         <p class="fragment">256 valeurs possibles</p>
                     </section>
                     <section>
-                        <h3>Entier sur 16 bit</h3>
-                        <p>0000000000000000 = 0</p>
-                        <p>1111111111111111 = 65 535</p>
-                        <p class="fragment">65 536 valeurs possibles</p>
+                        <p>3 x 8 bits = 24 bits<br/>16,777,216 valeurs possibles</p>
+                        <img src="./img/windows_24bit.gif">
                     </section>
                     <!--section>
                         <h3>1 bit pour 1 entier signé:</h3>
@@ -239,18 +254,38 @@
                         <!-- Une donnée binaire n'a pas de format a priori -->
                         <!-- example d'un fichier lisible dans plusieurs format ?! -->
                         <code style="font-size: 0.8em;">
-                            <span class="fragment highlight-red">00110010</span><span class="fragment highlight-blue">01000101</span><span class="fragment highlight-green">0000010101001110</span><span class="fragment highlight-red">01010110</span><span class="fragment highlight-blue">10101011</span>
+                            <span class="fragment highlight-red">00110010</span><span class="fragment highlight-green">01000101</span><span class="fragment highlight-blue">00000101</span><span class="fragment highlight-red">01001110</span><span class="fragment highlight-green">01010110</span><span class="fragment highlight-blue">10101011</span>
                         </code>
+                        <!-- Ici plutot ne faire que des paquet de 1 octet, exemple de 2 pixel RVB. -->
                         <p class="fragment">
-                            <span class="fragment highlight-red">50</span><span class="fragment highlight-blue">69</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-red">86</span><span class="fragment highlight-blue">171</span>
+                            <span class="fragment highlight-red">50</span><span class="fragment highlight-green">69</span><span class="fragment highlight-blue">5</span><span class="fragment highlight-red">78</span><span class="fragment highlight-green">86</span><span class="fragment highlight-blue">171</span>
                         </p>
+                        <p class="fragment">
+                            <span class="pixel" style="background-color: rgb(50, 69, 5);"></span>
+                            <span class="pixel" style="background-color: rgb(78, 86, 171);"></span>
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Entier sur 16 bit</h3>
+                        <p>0000000000000000 = 0</p>
+                        <p>1111111111111111 = 65535</p>
+                        <p class="fragment">65 536 valeurs possibles</p>
                     </section>
                     <section data-background="#222222" style="color: white;">
-                        <h3 style="color: white;">Numéro de sécurité sociale</h3>
-                        <p>
-                            <span class="fragment highlight-red">1</span><span class="fragment highlight-blue">89</span><span class="fragment highlight-green">10</span><span class="fragment highlight-red">38</span><span class="fragment highlight-blue">185</span><span class="fragment highlight-green">048</span><span class="fragment highlight-red">86</span>
+                        <!-- Une donnée binaire n'a pas de format a priori -->
+                        <!-- example d'un fichier lisible dans plusieurs format ?! -->
+                        <code style="font-size: 0.8em;">
+                            <span class="fragment highlight-red">0011001001000101</span><span class="fragment highlight-green">0000010101001110</span><span class="fragment highlight-blue">0101011010101011</span>
+                        </code>
+                        <!-- Ici plutot ne faire que des paquet de 1 octet, exemple de 2 pixel RVB. -->
+                        <p class="fragment">
+                            <span class="fragment highlight-red">12869</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-blue">22187</span>
+                        </p>
+                        <p class="fragment">
+                            <span class="pixel-big" style="background-color: rgb(50.07, 5.28, 86.33);"></span>
                         </p>
                     </section>
+                    <!-- Ici reprendre l'exemple précédent mais avex 1 seul pixel encodé en 16 bit. -->
                     <section>
                         <quote>Une chaine binaire n'a pas de signification en soit.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
                     </section>
@@ -310,6 +345,7 @@
                         <p>546 = 10<span class="fragment highlight-red">00100010</span></p>
 <pre class="fragment"><code class="hljs js center">view[0] === 34;</code></pre>
                     </section>
+                    <section data-background="./img/pacman_int_overflow.jpg"></section>
                     <section>
                         <h3>Plein d'utilitaires!</h3>
                         <pre class="fragment"><code class="hljs js center">Int8Array, Float32Array, Uint8ClampedArray, Uint32Array, ...</code></pre>
@@ -410,13 +446,13 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         motParPage = motParPage * ligneParPage;
                         -->
                     </section>
-                    <section data-state="demo-end">
+                    <!--section data-state="demo-end">
                         <p>Où se trouve l'information ?</p>
                         <pre><code class="hljs js">function getIndex(x, y, z) {
     return x + y * width + z * (width * height);
 }</code></pre>
                         <p style="font-size: 0.75em;">numero + ligne &times; motParLigne + page &times; (motParLigne &times; ligneParPage)</p>
-                        <!--pre class="fragment none center">[0,0,0][1,0,0][2,0,0]
+                        <!- -pre class="fragment none center">[0,0,0][1,0,0][2,0,0]
 [0,1,0][1,1,0][2,1,0]
 [0,2,0][1,2,0][2,2,0]
 
@@ -426,8 +462,8 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
 
 [0,0,2][1,0,2][2,0,2]
 [0,1,2][1,1,2][2,1,2]
-[0,2,2][1,2,2][2,2,2]</pre-->
-                    </section>
+[0,2,2][1,2,2][2,2,2]</pre- ->
+                    </section-->
                     <section data-background-iframe="./demo" data-state="demo">
                         <span class="fragment"></span>
                     </section>
@@ -483,8 +519,8 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <h2 class="emoji">☠️</h2>
                         <h2>Pourquoi c'est chaud ?</h2>
                         <ul>
-                            <li class="fragment">Rigide</li>
                             <li class="fragment">Pas lisible</li>
+                            <li class="fragment">Rigide</li>
                             <li class="fragment">Peu de bug</li>
                         </ul>
                     </section>

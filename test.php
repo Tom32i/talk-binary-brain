@@ -1,7 +1,7 @@
 <?php
 
-$binary = pack("C*", 12, 255);
+$binary = pack("C*", 50, 12, 255);
 $values = unpack("C*", $binary);
 
-var_dump($content);
-var_dump($data);
+var_dump($binary);
+var_dump($values);

@@ -10,7 +10,7 @@ Présenter rapidement ma "légitimité"
 - pour créer un projet de recherche scientifique collaborative
 - SPINE : un serious game dans lequel tu analyse de IRM du cerveau
 - Le but ? apprendre à repérer une tumeur dans le cerveau (par exemple), la dessiner et envoyer ta copie
-- Une fois qu'on a suffisament de copie => on comparre le réusltats moyen des joueurs à ceux d'une neurologue. 
+- Une fois qu'on a suffisament de copie => on comparre le réusltats moyen des joueurs à ceux d'une neurologue.
 - Et les résultats sont encourageant et pourrons sans doute permettre de contribuer à la recherche scientifique, en faisant une pre-selection des IRM par exemple.
 
 ### IRM
@@ -85,7 +85,7 @@ Présenter rapidement ma "légitimité"
 - rapidité d'encodage / décodage
 - support
 
-### Pourquoi c'est chaud 
+### Pourquoi c'est chaud
 
 - Pas lisible par l'humain
 - Rigide: la spec doit être prévue / connue à l'avance

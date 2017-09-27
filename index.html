@@ -23,7 +23,7 @@
                 border: 1em solid black;
                 border-left-width: 2em;
                 border-right-width: 2em;
-                background: white;
+                background: #333333;
                 box-shadow: none;
                 border-radius: 1em;
                 overflow: visible;
@@ -113,6 +113,10 @@
                 margin-left: -75%;
             }
 
+            .reveal section .red { color: red; }
+            .reveal section .green { color: green; }
+            .reveal section .blue { color: blue; }
+
             .reveal section .marquee > * {
                 position: absolute;
                 width: 100%;
@@ -148,7 +152,7 @@
                 <section>
                     <section data-background="#5dbab6" style="color: white;">
                         <h2 style="color: white;">SPINE</h2>
-                        <p>Université de Bordeaux<br/>&times;<br/>Harvard Medical School</p>
+                        <p>Université de Bordeaux<br/>&times;<br/>Harvard Medical School<br/>&times;<br/>élao</p>
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
                     </section>
@@ -159,11 +163,16 @@
                         <h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2>
                     </section>
                     <section data-background="./img/spine-1.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#seriousGame</h2>
+                        <h2 style="color: white; text-shadow: 0 0 5px black;">#SeriousGame</h2>
                     </section>
                     <section data-background="#5dbab6" style="color: white;">
                         <quote>Analyser des IRM du cerveau<br/>par le grand public sur tablette</quote>
                         <div class="ipad"><img class="none" src="./img/spine-game.png"></div>
+                    </section>
+                    <section data-background="#5dbab6" style="color: white;">
+                        <div class="ipad" style="font-size: 32px; margin-top: 0em;">
+                            <img class="none" src="./img/spine-in-game-2.png">
+                        </div>
                     </section>
                 </section>
                 <section>
@@ -179,8 +188,8 @@
                         <!-- CSS 3D grid? -->
                     </section>
                     <section>
-                        <h2>Format Nifti-1</h2>
-                        <p>my_brain.nii</p>
+                        <span class="emoji">💾</span>
+                        <p>my_brain.nii<br/><span class="mutted">Nifti-1</span></p>
                         <!-- Knight of ni -->
                     </section>
                     <section>
@@ -194,13 +203,13 @@
                         <h2>Le binaire</h2>
                     </section>
                     <section>
-                        <h3 style="letter-spacing: 10px;">0<span class="mutted">,</span>  1<span class="mutted">,</span>  10<span class="mutted">,</span>  11<span class="mutted">,</span>  100<span class="mutted">,</span>  101</h3>
+                        <h3 style="letter-spacing: 10px;">1<span class="mutted">,</span>  10<span class="mutted">,</span>  11<span class="mutted">,</span>  100<span class="mutted">,</span>  101</h3>
                     </section>
                     <section>
                         <h3 class="">1 bit <span class="mutted"> = </span> 0 <span class="mutted">|</span> 1</h3>
-                        <h3 class="fragment">1 octet <span class="mutted">=</span> 8 bits <span class="mutted"> = </span> 10010110</h3>
-                        <h3 class="fragment">1 Ko <span class="mutted">=</span> 1024 octets <span class="mutted">=</span> 8192 bits</h3>
+                        <h3 class="fragment">8 bits <span class="mutted">=</span> 1 octet <span class="mutted">=</span> 10010110</h3>
                         <!--h3 class="fragment">1 GoT <span class="mutted">=</span> 536,870,912 octets</h3-->
+                        <h3 class="fragment">1024 octets <span class="mutted">=</span>1 Ko <span class="mutted">=</span> 8192 bits</h3>
                     </section>
                     <section data-background="./img/GOT.jpg">
                         <h3 style="color: white;">536,870,912 octets</h3>
@@ -213,6 +222,7 @@
                     <section>
                         <h3>Numériser votre information</h3>
                         <p>1 infos => 1 nombre</p>
+                        <img class="none" src="./img/matrix.jpg">
                     </section>
                     <section data-background="#222222" style="color: white;">
                         <h3 style="color: white;">Numéro de sécurité sociale</h3>
@@ -226,14 +236,19 @@
                     </section>
                     <section>
                        <h3>Représenter une image en binaire</h3>
-                       <img src="./img/doomguy.jpg">
                     </section>
                     <section>
-                       <ul>
-                            <li class="fragment">Une grille de pixel (bitmap)</li>
-                            <li class="fragment">1 pixel = 1 couleur</li>
-                            <li class="fragment">1 couleur = 3 entiers (RVB) de 0 à 255</li>
-                       </ul>
+                        <div class="row" style="align-items: center; justify-content: space-around;">
+                           <img class="column none" style="flex: 1;"" src="./img/doomguy.jpg">
+                           <div class="column" style="flex: 3;">
+                               <ul style="text-align: left;">
+                                    <li class="fragment">Une grille de pixel</li>
+                                    <li class="fragment">1 pixel = 1 couleur</li>
+                                    <li class="fragment">1 couleur = 3 valeurs <span class="red">R</span><span class="green">V</span><span class="blue">B</span></li>
+                                    <li class="fragment">1 valeur = 1 entier de 0 à 255</li>
+                                </ul>
+                            </div>
+                       </div>
                     </section>
                     <section>
                         <h3>Entier sur 8 bit</h3>
@@ -243,7 +258,7 @@
                     </section>
                     <section>
                         <p>3 x 8 bits = 24 bits<br/>16,777,216 valeurs possibles</p>
-                        <img src="./img/windows_24bit.gif">
+                        <img class="none" src="./img/windows_24bit.gif">
                     </section>
                     <!--section>
                         <h3>1 bit pour 1 entier signé:</h3>
@@ -353,11 +368,11 @@
                         <pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
                         <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 348);</code></pre>
                     </section>
-                    <section data-background="./img/troll.jpg">
+                    <!--section data-background="./img/troll.jpg">
                         <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
                         <pre><code class="hljs php center">$binary = pack("C*", 12, 255);
 $values = unpack("C*", $binary);</code></pre>
-                    </section>
+                    </section-->
                 </section>
                 <section>
                     <section>

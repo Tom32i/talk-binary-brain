@@ -20,7 +20,7 @@ Présenter rapidement ma "légitimité"
 - On expose le cerveau à un très fort rayonnement magnetique + des plus faible qui faire réagir les particules (donc sous l'atome) des tissues (là ou il y en a) d'une facon qu'on sais localiser précisement dans l'espace.
 - On obtient donc une image sur fond noir, ou des zone plus ou moins blanche correspondent aux tissues présent dans le crane.
 - Là où une image est constituée de pixel, un image irm est constituée de voxels.
-- Le fichier sortie est au format 'NIFTI-1' (il y en a d'autre) : .nii
+- Le fichier sortie est au format 'NIFTI-1' (il y en a d'autre) : .nii Neuroimaging Informatics Technology Initiative http://paulbourke.net/dataformats/nii/nifti1.h
 - Alors nous, on récupère le fichier, on lance notre IDE préféré et ...
 
 ### Binaire

@@ -152,28 +152,28 @@
                 <section>
                     <section data-background="#5dbab6" style="color: white;">
                         <h2 style="color: white;">SPINE</h2>
-                        <p>Université de Bordeaux<br/>&times;<br/>Harvard Medical School<br/>&times;<br/>élao</p>
+                        <p>Université de Bordeaux<br/>&times;<br/>Harvard Medical School</p>
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
-                    </section>
-                    <section data-background="./img/spine-3.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2>
-                    </section>
-                    <section data-background="./img/spine-2.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2>
-                    </section>
-                    <section data-background="./img/spine-1.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#SeriousGame</h2>
                     </section>
                     <section data-background="#5dbab6" style="color: white;">
                         <quote>Analyser des IRM du cerveau<br/>par le grand public sur tablette</quote>
                         <div class="ipad"><img class="none" src="./img/spine-game.png"></div>
                     </section>
-                    <section data-background="#5dbab6" style="color: white;">
+                    <section data-background="./img/spine-1.jpg">
+                        <!--h2 style="color: white; text-shadow: 0 0 5px black;">#SeriousGame</h2-->
+                    </section>
+                    <section data-background="./img/spine-2.jpg">
+                        <!--h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2-->
+                    </section>
+                    <section data-background="./img/spine-3.jpg">
+                        <!--h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2-->
+                    </section>
+                    <!--section data-background="#5dbab6" style="color: white;">
                         <div class="ipad" style="font-size: 32px; margin-top: 0em;">
                             <img class="none" src="./img/spine-in-game-2.png">
                         </div>
-                    </section>
+                    </section-->
                 </section>
                 <section>
                     <section>
@@ -184,13 +184,16 @@
                     <section data-background="./img/IRM_result.jpg"></section>
                     <section>
                         <h2>Image Voxel</h2>
-                        <img class="none" src="./img/rubik.png" style="max-height: 500px;">
+                        <img class="none" src="./img/minecraft.png" style="max-height: 500px;">
                         <!-- CSS 3D grid? -->
                     </section>
                     <section>
                         <span class="emoji">💾</span>
                         <p>my_brain.nii<br/><span class="mutted">Nifti-1</span></p>
                         <!-- Knight of ni -->
+                    </section>
+                    <section>
+                        <quote>In web we trust</quote>
                     </section>
                     <section>
                         <h2><span class="emoji">🤖</span></h2>
@@ -216,13 +219,15 @@
                     </section>
                 </section>
                 <section>
-                    <section>
-                        <h2>Representer l'information</h2>
+                    <section data-background="./img/binary_wall.jpg">
+                        <h2 class="fragment" style="color: white;">Representer l'information</h2>
                     </section>
                     <section>
                         <h3>Numériser votre information</h3>
-                        <p>1 infos => 1 nombre</p>
-                        <img class="none" src="./img/matrix.jpg">
+                        <p class="fragment">
+                            1 infos => 1 nombre
+                            <img class="none" src="./img/matrix.jpg">
+                        </p>
                     </section>
                     <section data-background="#222222" style="color: white;">
                         <h3 style="color: white;">Numéro de sécurité sociale</h3>
@@ -258,7 +263,7 @@
                     </section>
                     <section>
                         <p>3 x 8 bits = 24 bits<br/>16,777,216 valeurs possibles</p>
-                        <img class="none" src="./img/windows_24bit.gif">
+                        <img class="none fragment" src="./img/windows_24bit.gif">
                     </section>
                     <!--section>
                         <h3>1 bit pour 1 entier signé:</h3>
@@ -365,8 +370,8 @@
                         <h3>Plein d'utilitaires!</h3>
                         <pre class="fragment"><code class="hljs js center">Int8Array, Float32Array, Uint8ClampedArray, Uint32Array, ...</code></pre>
                         <pre class="fragment"><code class="hljs js center">new Uint8Array(buffer, 2, 4);</code></pre>
-                        <pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
-                        <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 348);</code></pre>
+                        <!--pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre-->
+                        <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 352);</code></pre>
                     </section>
                     <!--section data-background="./img/troll.jpg">
                         <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
@@ -405,7 +410,7 @@ socket.on('message', (event) => { const buffer = event.data; })</code></pre>
                         <h2>La spec Nifti-1</h2>
                     </section>
                     <section>
-                        <h3>Header sur 348 octets</h3>
+                        <h3>Header sur 352 octets</h3>
                         <table>
                             <tbody>
                                 <tr class="fragment">
@@ -441,14 +446,14 @@ const width  = header.getUint16(42); // 256
 const height = header.getUint16(44); // 256
 const depth  = header.getUint16(46); // 176
 const bitPerVoxel = header.getUint16(72); // 32</code></pre>
-                        <div class="fragment">
-                            <pre><code class="hljs js">const size = 352 + length * width * depth * bitPerVoxel / 8;</code></pre>
-                            <p>46,1 Mo</p>
-                        </div>
                     </section>
                     <section>
                         <h3>Body à partir de l'octet 352</h3>
                         <p>Suite de voxel où 1 voxel = 1 entier.</p>
+                    </section>
+                    <section>
+                        <pre><code class="hljs js">const size = 352 + length * width * depth * bitPerVoxel / 8;</code></pre>
+                        <p>46,1 Mo</p>
                     </section>
                     <section>
                         <h4>Manipuler le body</h4>

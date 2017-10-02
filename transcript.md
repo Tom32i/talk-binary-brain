@@ -17,7 +17,7 @@ Présenter rapidement ma "légitimité"
 
 - Manipuler des images IRM dans le navigateur, ça nous fait pas peur !
 - Alors qu'est-ce que c'est qu'une image IRM ?
-- On expose le cerveau à un très fort rayonnement magnetique + des plus faible qui faire réagir les particules (donc sous l'atome) des tissues (là ou il y en a) d'une facon qu'on sais localiser précisement dans l'espace.
+- On expose le cerveau à un très fort rayonnement électro-magnétique + des plus faible qui faire réagir les particules (donc sous l'atome) des tissues (là ou il y en a) d'une facon qu'on sais localiser précisement dans l'espace.
 - On obtient donc une image sur fond noir, ou des zone plus ou moins blanche correspondent aux tissues présent dans le crane.
 - Là où une image est constituée de pixel, un image irm est constituée de voxels.
 - Le fichier sortie est au format 'NIFTI-1' (il y en a d'autre) : .nii Neuroimaging Informatics Technology Initiative http://paulbourke.net/dataformats/nii/nifti1.h
@@ -65,15 +65,14 @@ Présenter rapidement ma "légitimité"
 - attention aux depassemetns
 - pacman int overflow
 - utilitaires
-- php
 - Recevoir des données
 
 ### Nifti-1
 
 - le header
 - lire le header
-- On peut en déduire la taille du fichier (même vide)
 - Body : plus simple qu'une image, 1 voxel = 1 entier (nuance de gris)
+- On peut en déduire la taille du fichier (même vide)
 - Lire le body avec un seul tableau typé qui va bien
 - Après ça il ne nou reste plus qu'a afficher l'image !
 

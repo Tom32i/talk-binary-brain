@@ -113,6 +113,11 @@
                 margin-left: -75%;
             }
 
+            .reveal section .url {
+                color: white;
+                letter-spacing: 0.2em;
+            }
+
             .reveal section .red { color: red; }
             .reveal section .green { color: green; }
             .reveal section .blue { color: blue; }
@@ -302,7 +307,7 @@
                             <span class="fragment highlight-red">12869</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-blue">22187</span>
                         </p>
                         <p class="fragment">
-                            <span class="pixel-big" style="background-color: rgb(50.07, 5.28, 86.33);"></span>
+                            <span class="pixel-big" style="background-color: rgb(50, 5, 86);"></span>
                         </p>
                     </section>
                     <!-- Ici reprendre l'exemple précédent mais avex 1 seul pixel encodé en 16 bit. -->
@@ -388,7 +393,9 @@ $values = unpack("C*", $binary);</code></pre>
 <pre><code class="hljs js">const request = new XMLHttpRequest();
 request.responseType = 'arraybuffer';
 request.open('GET', 'http://my.brain.com/my_brain.nii');
-request.addEventListener('load', () => request.response);
+request.addEventListener('load', () => {
+    const buffer = request.response;
+});
 request.send();</code></pre>
                     </section>
                     <section>
@@ -445,6 +452,7 @@ socket.on('message', (event) => { const buffer = event.data; })</code></pre>
 const width  = header.getUint16(42); // 256
 const height = header.getUint16(44); // 256
 const depth  = header.getUint16(46); // 176
+const dataType = header.getUint16(70); // 16 (Float32Array)
 const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                     </section>
                     <section>
@@ -452,12 +460,12 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <p>Suite de voxel où 1 voxel = 1 entier.</p>
                     </section>
                     <section>
-                        <pre><code class="hljs js">const size = 352 + length * width * depth * bitPerVoxel / 8;</code></pre>
+                        <pre><code class="hljs js">const size = 352 + (length * width * depth) * (bitPerVoxel / 8);</code></pre>
+                        <p>46 137 696 octets</p>
                         <p>46,1 Mo</p>
                     </section>
                     <section>
                         <h4>Manipuler le body</h4>
-                        <p>32 bit par voxel donc:</p>
                         <pre><code class="hljs js center">const body = new Float32Array(buffer, 352); </code></pre>
                         <!-- Analogie du livre:
                         soit un livre dont chaque ligne contient le même nombre de mot et chaque page le même nombre de ligne.
@@ -486,6 +494,9 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                     </section-->
                     <section data-background-iframe="./demo" data-state="demo">
                         <span class="fragment"></span>
+                        <a class="fragment url" href="https://lab.tom32i.fr/binary-brain/demo/" target="_blank">
+                           lab.tom32i.fr/binary-brain/demo
+                        </a>
                     </section>
                     <!--section>
                         Explication lecture ?

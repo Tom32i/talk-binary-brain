@@ -21,8 +21,10 @@ canvas {
     padding: 0.1em 0.2em;
     background: #cccccc;
     border-radius: 4px;
+    max-width: 20%;
 }
 
 input[type="range"] {
     display: block;
+    max-width: 100%;
 }

@@ -1,7 +1,0 @@
-{
-  "short_name": "binary-brain",
-  "name": "Binary Brain Demo",
-  "description": "Browse a brain MRI in your browser.",
-  "display": "standalone",
-  "orientation": "landscape"
-}

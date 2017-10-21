@@ -2,20 +2,26 @@
 
 ### Thomas, web developper
 
-Présenter rapidement ma "légitimité"
-
 ### Projet SPINE
 
 - Université de Bordeaux est venue nous voir
-- pour créer un projet de recherche scientifique collaborative
+- pour créer un projet de recherche scientifique collaborative sur le cerveau, sous la forme d'un serious game sur tablette
 - SPINE : un serious game dans lequel tu analyse de IRM du cerveau
 - Le but ? apprendre à repérer une tumeur dans le cerveau (par exemple), la dessiner et envoyer ta copie
 - Une fois qu'on a suffisament de copie => on comparre le réusltats moyen des joueurs à ceux d'une neurologue.
 - Et les résultats sont encourageant et pourrons sans doute permettre de contribuer à la recherche scientifique, en faisant une pre-selection des IRM par exemple.
 
+### Plan
+
+> Vous savez le problème avec les développeurs web ? 
+> Ils pensent qu'on peut tout résoudre avec du Javascript.
+
+Quand on nous proposé de réaliser ça avec des technos web, on a dit : pas de problème !
+
+Pourquoi ? Comment ? Qu'est-ce qu'on a appris ?
+
 ### IRM
 
-- Manipuler des images IRM dans le navigateur, ça nous fait pas peur !
 - Alors qu'est-ce que c'est qu'une image IRM ?
 - On expose le cerveau à un très fort rayonnement électro-magnétique + des plus faible qui faire réagir les particules (donc sous l'atome) des tissues (là ou il y en a) d'une facon qu'on sais localiser précisement dans l'espace.
 - On obtient donc une image sur fond noir, ou des zone plus ou moins blanche correspondent aux tissues présent dans le crane.

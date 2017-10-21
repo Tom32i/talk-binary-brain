@@ -19,7 +19,18 @@
                 box-shadow: none;
             }
 
-            .reveal section .ipad {
+            .reveal section .talk-title {
+                color: white;
+                text-shadow: 0 0 0.5em #000000, 0 0 1em #000000;
+                font-size: 5em;
+            }
+
+            .reveal section .talk-title small {
+                font-size: 0.6em;
+                text-transform: lowercase;
+            }
+
+            /*.reveal section .ipad {
                 border: 1em solid black;
                 border-left-width: 2em;
                 border-right-width: 2em;
@@ -30,16 +41,26 @@
                 padding: 0em;
                 width: 20em;
                 height: 15em;
-                margin: 1em auto 0;
+                margin: 0 auto;
                 box-shadow: 0 0.1em 0 0 #333333;
             }
 
-            .reveal section .ipad img {
+            .reveal section > * + .ipad {
+                margin-top: 1em;
+            }*/
+
+            .reveal section .ipad {
                 margin: 0;
-                width: 100%;
-                height: auto;
-                max-width: 100%;
-                max-height: 100%;
+                padding: 0;
+                width: 20em;
+                height: 15em;
+                font-size: 32px;
+                border: 1em solid black;
+                border-left-width: 2em;
+                border-right-width: 2em;
+                border-radius: 1em;
+                background: #333333;
+                box-shadow: 0 0.1em 0 0 #333333;
             }
 
             .reveal section code.multiligne {
@@ -87,6 +108,47 @@
                 z-index: 10;
             }*/
 
+            .reveal section .binary-chain {
+                font-size: 0.8em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .reveal section .binary-chain > .fragment.visible {
+                flex: 1;
+            }
+
+            .reveal section .split {
+                display: flex;
+                align-items: center;
+            }
+
+            .reveal section .split > * {
+                flex: 1;
+            }
+
+            .reveal section .split.pixels {
+                margin-top: 2em;
+                justify-content: space-around;
+            }
+
+            .reveal section .split.pixels > .pixel {
+                flex: 0;
+                flex-basis: 4em;
+                height: 4em;
+            }
+
+            .reveal section .split.pixels > .pixel-big {
+                flex: 0;
+                flex-basis: 6em;
+                height: 6em;
+            }
+
+            .reveal section .red { color: #ff2c2d; }
+            .reveal section .green { color: #17ff2e; }
+            .reveal section .blue { color: #1b91ff; }
+
             .reveal section .badge {
                 color: white;
                 background-color: #5dbab6;
@@ -98,6 +160,7 @@
 
             .reveal section .row {
                 display: flex;
+                align-items: center;
             }
 
             .reveal section .row .column {
@@ -118,9 +181,14 @@
                 letter-spacing: 0.2em;
             }
 
-            .reveal section .red { color: red; }
-            .reveal section .green { color: green; }
-            .reveal section .blue { color: blue; }
+            .reveal section .avatar {
+                border: none;
+                box-shadow: none;
+                border-radius: 50%;
+                max-width: 25%;
+                display: block;
+                margin: 0 auto;
+            }
 
             .reveal section .marquee > * {
                 position: absolute;
@@ -139,31 +207,44 @@
                 from { transform: translateX(0%); }
                 to { transform: translateX(-100%); }
             }
+
+            @media print {
+                body, html, .reveal .slide-background {
+                    background-color: #f7f3d8;
+                }
+
+                .reveal section .ipad {
+                    font-size: 32px;
+                }
+
+                .reveal iframe {
+                    background-color: black;
+                }
+
+                .reveal section .talk-title {
+                    text-shadow: 0 0 20px black;
+                }
+            }
         </style>
         <meta but-du-talk="Monter que manipuler des données binaire en JS c'est à portée de main.">
     </head>
     <body>
         <div class="reveal">
             <div class="slides">
-                <section data-background="#000000">
-                    <h1 style="text-shadow: none; color: white;">The Binary Brain</h1>
-                    <img class="none" src="./img/intro.jpg">
-                </section>
-                <section>
-                    <section>
-                        <h2>Thomas, Web Developer.</h2>
-                    </section>
+                <section data-background="./img/intro.jpg">
+                    <h1 class="talk-title">
+                        The Binary Brain
+                    </h1>
                 </section>
                 <section>
                     <section data-background="#5dbab6" style="color: white;">
-                        <h2 style="color: white;">SPINE</h2>
-                        <p>Université de Bordeaux<br/>&times;<br/>Harvard Medical School</p>
+                        <h2 style="color: white;">Université de Bordeaux<br/>&times;<br/>Harvard Medical School</h2>
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
                     </section>
                     <section data-background="#5dbab6" style="color: white;">
-                        <quote>Analyser des IRM du cerveau<br/>par le grand public sur tablette</quote>
-                        <div class="ipad"><img class="none" src="./img/spine-game.png"></div>
+                        <img class="none ipad" src="./img/spine-game.png">
+                        <p class="fragment">#seriousgame #tablette #recherche #crowdsourcing #cerveau</p>
                     </section>
                     <section data-background="./img/spine-1.jpg">
                         <!--h2 style="color: white; text-shadow: 0 0 5px black;">#SeriousGame</h2-->
@@ -174,15 +255,15 @@
                     <section data-background="./img/spine-3.jpg">
                         <!--h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2-->
                     </section>
-                    <!--section data-background="#5dbab6" style="color: white;">
-                        <div class="ipad" style="font-size: 32px; margin-top: 0em;">
-                            <img class="none" src="./img/spine-in-game-2.png">
-                        </div>
-                    </section-->
+                </section>
+                <section>
+                    <h2>💀📲</h2>
+                    <quote>Parcourir le cerveau humain dans le navigateur.</quote>
+                    <!-- Pourquoi ? Comment ? Qu'est-ce qu'on a appris ? -->
                 </section>
                 <section>
                     <section>
-                        <h2>IRM</h2>
+                        <h2 style="font-size: 4em;">IRM</h2>
                         <small>Imagerie par Résonance Magnétique</small>
                     </section>
                     <section data-background="./img/IRM.jpg"></section>
@@ -196,9 +277,6 @@
                         <span class="emoji">💾</span>
                         <p>my_brain.nii<br/><span class="mutted">Nifti-1</span></p>
                         <!-- Knight of ni -->
-                    </section>
-                    <section>
-                        <quote>In web we trust</quote>
                     </section>
                     <section>
                         <h2><span class="emoji">🤖</span></h2>
@@ -229,10 +307,7 @@
                     </section>
                     <section>
                         <h3>Numériser votre information</h3>
-                        <p class="fragment">
-                            1 infos => 1 nombre
-                            <img class="none" src="./img/matrix.jpg">
-                        </p>
+                        <img class="none, fragment" src="./img/matrix.jpg">
                     </section>
                     <section data-background="#222222" style="color: white;">
                         <h3 style="color: white;">Numéro de sécurité sociale</h3>
@@ -242,22 +317,20 @@
                     </section>
                     <section>
                         <h3>Stocker les nombres en binaire</h3>
-                        <p>base 10 => base 2</p>
+                        <p>base 10 👉 base 2</p>
                     </section>
                     <section>
                        <h3>Représenter une image en binaire</h3>
                     </section>
                     <section>
                         <div class="row" style="align-items: center; justify-content: space-around;">
-                           <img class="column none" style="flex: 1;"" src="./img/doomguy.jpg">
-                           <div class="column" style="flex: 3;">
-                               <ul style="text-align: left;">
-                                    <li class="fragment">Une grille de pixel</li>
-                                    <li class="fragment">1 pixel = 1 couleur</li>
-                                    <li class="fragment">1 couleur = 3 valeurs <span class="red">R</span><span class="green">V</span><span class="blue">B</span></li>
-                                    <li class="fragment">1 valeur = 1 entier de 0 à 255</li>
-                                </ul>
-                            </div>
+                            <img class="column none" style="flex: 0;" src="./img/doomguy.jpg">
+                            <ul class="column" style="flex: 0; flex-basis: 13em; text-align: left;">
+                                <li class="fragment">Une grille de pixel</li>
+                                <li class="fragment">1 pixel = 1 couleur</li>
+                                <li class="fragment">1 couleur = 3 valeurs <span class="red">R</span><span class="green">V</span><span class="blue">B</span></li>
+                                <li class="fragment">1 valeur = 1 entier de 0 à 255</li>
+                            </ul>
                        </div>
                     </section>
                     <section>
@@ -278,14 +351,14 @@
                     <section data-background="#222222" style="color: white;">
                         <!-- Une donnée binaire n'a pas de format a priori -->
                         <!-- example d'un fichier lisible dans plusieurs format ?! -->
-                        <code style="font-size: 0.8em;">
+                        <code class="binary-chain">
                             <span class="fragment highlight-red">00110010</span><span class="fragment highlight-green">01000101</span><span class="fragment highlight-blue">00000101</span><span class="fragment highlight-red">01001110</span><span class="fragment highlight-green">01010110</span><span class="fragment highlight-blue">10101011</span>
                         </code>
                         <!-- Ici plutot ne faire que des paquet de 1 octet, exemple de 2 pixel RVB. -->
-                        <p class="fragment">
-                            <span class="fragment highlight-red">50</span><span class="fragment highlight-green">69</span><span class="fragment highlight-blue">5</span><span class="fragment highlight-red">78</span><span class="fragment highlight-green">86</span><span class="fragment highlight-blue">171</span>
+                        <p class="fragment split">
+                            <span class="red">50</span><span class="green">69</span><span class="blue">5</span><span class="red">78</span><span class="green">86</span><span class="blue">171</span>
                         </p>
-                        <p class="fragment">
+                        <p class="fragment split pixels">
                             <span class="pixel" style="background-color: rgb(50, 69, 5);"></span>
                             <span class="pixel" style="background-color: rgb(78, 86, 171);"></span>
                         </p>
@@ -299,20 +372,20 @@
                     <section data-background="#222222" style="color: white;">
                         <!-- Une donnée binaire n'a pas de format a priori -->
                         <!-- example d'un fichier lisible dans plusieurs format ?! -->
-                        <code style="font-size: 0.8em;">
+                        <code class="binary-chain">
                             <span class="fragment highlight-red">0011001001000101</span><span class="fragment highlight-green">0000010101001110</span><span class="fragment highlight-blue">0101011010101011</span>
                         </code>
                         <!-- Ici plutot ne faire que des paquet de 1 octet, exemple de 2 pixel RVB. -->
-                        <p class="fragment">
-                            <span class="fragment highlight-red">12869</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-blue">22187</span>
+                        <p class="fragment split">
+                            <span class="red">12869</span><span class="green">1358</span><span class="blue">22187</span>
                         </p>
-                        <p class="fragment">
+                        <p class="fragment split pixels">
                             <span class="pixel-big" style="background-color: rgb(50, 5, 86);"></span>
                         </p>
                     </section>
                     <!-- Ici reprendre l'exemple précédent mais avex 1 seul pixel encodé en 16 bit. -->
                     <section>
-                        <quote>Une chaine binaire n'a pas de signification en soit.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
+                        <quote>Une chaine binaire n'a pas de signification en soi.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
                     </section>
                     <section data-background="./img/adn.jpg">
                         <!--p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p-->
@@ -365,7 +438,7 @@
                         </p>
                     </section>
                     <section>
-                        <h3>Attention au dépassements !</h3>
+                        <h3>Attention aux dépassements !</h3>
 <pre><code class="hljs js center">view[0] = 546;</code></pre>
                         <p>546 = 10<span class="fragment highlight-red">00100010</span></p>
 <pre class="fragment"><code class="hljs js center">view[0] === 34;</code></pre>
@@ -492,7 +565,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
 [0,1,2][1,1,2][2,1,2]
 [0,2,2][1,2,2][2,2,2]</pre- ->
                     </section-->
-                    <section data-background-iframe="./demo" data-state="demo">
+                    <section data-background-iframe="./demo/" data-state="demo">
                         <span class="fragment"></span>
                         <a class="fragment url" href="https://demo.tom32i.fr/" target="_blank">
                            demo.tom32i.fr
@@ -528,12 +601,12 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
 
                         <div>
                             <h4>Json: <small style="vertical-align: middle;">54 octets (54 caractère)</small></h4>
-                            <pre><code class="hjs json">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
+                            <pre><code class="hjs json center">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
                         </div>
 
                         <div class="fragment">
                             <h4>Binaire: <small style="vertical-align: middle;">6 octets (1 + 1 + 2 + 2)</small></h4>
-                            <pre><code class="hjs">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
+                            <pre><code class="hjs center">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
                         </div>
                     </section>
                     <section>
@@ -565,21 +638,22 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         </ul>
                     </section>
                     <section>
-                        <quote>Javascript gère bien le binaire 👌</quote>
+                        <quote style="font-size: 1.6em;">Javascript gère bien le binaire 👌</quote>
                     </section>
                 </section>
                 <section>
-                    <h1>Merci !</h1>
+                    <h1 style="margin-bottom: 0.4em;">Merci !</h1>
                     <div class="row">
                         <div class="column">
                             <h4>Sources</h4>
-                            <p><a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Specfication nitfi-1</a></p>
-                            <p><a href="https://github.com/Tom32i/binary-brain">Tom32i/binary-brain</a></p>
+                            <p>📖 <a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Specfication nitfi-1</a></p>
+                            <p>🐙 <a href="https://github.com/Tom32i/binary-brain">Tom32i/binary-brain</a></p>
                         </div>
                         <div class="column">
-                            <h4>Questions ?</h4>
-                            <p><a href="https://twitter.com/SPINEscience">@Spine</a></p>
-                            <p><a href="https://twitter.com/Tom32i">@Tom32i</a></p>
+                            <p>
+                                <img class="avatar" src="./img/tom32i.png">
+                                <a href="https://twitter.com/Tom32i">@Tom32i</a>
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -594,6 +668,16 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 history: true,
                 overview: false,
                 help: false,
+
+                width: 1280,
+                height: 720,
+
+                // Factor of the display size that should remain empty around the content
+                margin: 0.1,
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.2,
+                maxScale: 1.5,
 
                 dependencies: [
                     { src: './node_modules/reveal.js/plugin/markdown/marked.js' },
@@ -619,6 +703,14 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 while (element.innerText.length < length) {
                     element.innerText += Math.random() > 0.5 ? 0 : 1;
                 }
+            }
+
+            if (window.location.search.match(/print-pdf/gi)) {
+                const link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = './node_modules/reveal.js/css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild(link);
             }
         </script>
     </body>

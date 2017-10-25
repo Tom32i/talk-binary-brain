@@ -30,25 +30,6 @@
                 text-transform: lowercase;
             }
 
-            /*.reveal section .ipad {
-                border: 1em solid black;
-                border-left-width: 2em;
-                border-right-width: 2em;
-                background: #333333;
-                box-shadow: none;
-                border-radius: 1em;
-                overflow: visible;
-                padding: 0em;
-                width: 20em;
-                height: 15em;
-                margin: 0 auto;
-                box-shadow: 0 0.1em 0 0 #333333;
-            }
-
-            .reveal section > * + .ipad {
-                margin-top: 1em;
-            }*/
-
             .reveal section .ipad {
                 margin: 0;
                 padding: 0;
@@ -100,6 +81,17 @@
             }
 
             .reveal section .center {
+                text-align: center;
+            }
+
+            .reveal section pre {
+                font-size: 0.66em;
+            }
+
+            .reveal section pre.bigCode {
+                font-size: 0.8em;
+            }
+            .reveal section pre.bigCode code {
                 text-align: center;
             }
 
@@ -291,7 +283,6 @@
                     <section>
                         <h2><span class="emoji">🤖</span></h2>
                         <div class="marquee"><p id="binary"></p></div>
-                        <!-- Animation binaire qui se remplie ? -->
                     </section>
                 </section>
                 <section>
@@ -304,7 +295,6 @@
                     <section>
                         <h3 class="">1 bit <span class="mutted"> = </span> 0 <span class="mutted">|</span> 1</h3>
                         <h3 class="fragment">8 bits <span class="mutted">=</span> 1 octet <span class="mutted">=</span> 10010110</h3>
-                        <!--h3 class="fragment">1 GoT <span class="mutted">=</span> 536,870,912 octets</h3-->
                         <h3 class="fragment">1024 octets <span class="mutted">=</span>1 Ko <span class="mutted">=</span> 8192 bits</h3>
                     </section>
                     <section data-background="./img/GOT.jpg">
@@ -347,7 +337,6 @@
                         <h3>Entier sur 8 bit</h3>
                         <p>00000000 = 0</p>
                         <p>11111111 = 255</p>
-                        <p class="fragment">256 valeurs possibles</p>
                     </section>
                     <section>
                         <p>3 x 8 bits = 24 bits<br/>16,777,216 valeurs possibles</p>
@@ -359,12 +348,9 @@
                         <p>1 1111111 = +127</p>
                     </section-->
                     <section data-background="#222222" style="color: white;">
-                        <!-- Une donnée binaire n'a pas de format a priori -->
-                        <!-- example d'un fichier lisible dans plusieurs format ?! -->
                         <code class="binary-chain">
                             <span class="fragment highlight-red">11101111</span><span class="fragment highlight-green">10010010</span><span class="fragment highlight-blue">00011100</span><span class="fragment highlight-red">10001011</span><span class="fragment highlight-green">01010000</span><span class="fragment highlight-blue">11111001</span>
                         </code>
-                        <!-- Ici plutot ne faire que des paquet de 1 octet, exemple de 2 pixel RVB. -->
                         <p class="fragment split">
                             <span class="red">239</span><span class="green">146</span><span class="blue">28</span><span class="red">139</span><span class="green">80</span><span class="blue">249</span>
                         </p>
@@ -377,15 +363,11 @@
                         <h3>Entier sur 16 bit</h3>
                         <p>0000000000000000 = 0</p>
                         <p>1111111111111111 = 65535</p>
-                        <p class="fragment">65 536 valeurs possibles</p>
                     </section>
                     <section data-background="#222222" style="color: white;">
-                        <!-- Une donnée binaire n'a pas de format a priori -->
-                        <!-- example d'un fichier lisible dans plusieurs format ?! -->
                         <code class="binary-chain">
                             <span class="fragment highlight-red">1110111110010010</span><span class="fragment highlight-green">0001110010001011</span><span class="fragment highlight-blue">0101000011111001</span>
                         </code>
-                        <!-- Ici plutot ne faire que des paquet de 1 octet, exemple de 2 pixel RVB. -->
                         <p class="fragment split">
                             <span class="red">61330</span><span class="green">7307</span><span class="blue">20729</span>
                         </p>
@@ -393,7 +375,6 @@
                             <span class="pixel-big" style="background-color: rgb(239, 28, 81);"></span>
                         </p>
                     </section>
-                    <!-- Ici reprendre l'exemple précédent mais avex 1 seul pixel encodé en 16 bit. -->
                     <section>
                         <quote>Une chaine binaire n'a pas de signification en soi.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
                     </section>
@@ -407,14 +388,14 @@
                     </section>
                     <section>
                         <h3>ArrayBuffer</h3>
-<pre><code class="hljs js center">const buffer = new ArrayBuffer(byteLength)</code></pre>
+<pre class="bigCode"><code class="hljs js">const buffer = new ArrayBuffer(byteLength);</code></pre>
                         <p class="blocks fragment">
                             <span class="block">001100100100010100000101010011100101011010101011</span>
                         </p>
                     </section>
                     <section>
                         <h3>TypedArrays</h3>
-<pre><code class="hljs js center">const view = new Uint8Array(buffer)</code></pre>
+<pre class="bigCode"><code class="hljs js">const view = new Uint8Array(buffer);</code></pre>
                         <p class="blocks fragment">
                             <span class="block">00110010</span>
                             <span class="block">01000101</span>
@@ -423,23 +404,22 @@
                             <span class="block">01010110</span>
                             <span class="block">10101011</span>
                         </p>
-<pre class="fragment"><code class="hljs js center">[50, 69, 5, 78, 86, 171]</code></pre>
-<!--pre class="fragment"><code class="hljs js">view[2] = 50;</code></pre-->
+<pre class="fragment bigCode"><code class="hljs js center">[50, 69, 5, 78, 86, 171]</code></pre>
                     </section>
                     <section>
-<pre><code class="hljs js center">const view = new Uint16Array(buffer)</code></pre>
+<pre class="bigCode"><code class="hljs js">const view = new Uint16Array(buffer);</code></pre>
                         <p class="blocks fragment">
                             <span class="block">0011001001000101</span>
                             <span class="block">0000010101001110</span>
                             <span class="block">0101011010101011</span>
                         </p>
-<pre class="fragment"><code class="hljs js center">[12869, 1358, 22187]</code></pre>
+<pre class="fragment bigCode"><code class="hljs js center">[12869, 1358, 22187]</code></pre>
                     </section>
                     <section>
                         <h3>Ecriture</h3>
-<pre><code class="hljs js center">view[0] = 255;</code></pre>
+<pre class="bigCode" style="width: 50%;"><code class="hljs js center">view[0] = 255;</code></pre>
                         <p class="blocks fragment">
-                            <span class="block fragment highlight-red">11111111</span>
+                            <span class="block red">11111111</span>
                             <span class="block">01000101</span>
                             <span class="block">00000101</span>
                             <span class="block">01001110</span>
@@ -449,23 +429,23 @@
                     </section>
                     <section>
                         <h3>Attention aux dépassements !</h3>
-<pre><code class="hljs js center">view[0] = 546;</code></pre>
+<pre class="bigCode" style="width: 50%;"><code class="hljs js center">view[0] = 546;</code></pre>
                         <p>546 = 10<span class="fragment highlight-red">00100010</span></p>
-<pre class="fragment"><code class="hljs js center">view[0] === 34;</code></pre>
+<pre class="fragment bigCode" style="width: 50%;"><code class="hljs js center">view[0] === 34;</code></pre>
                     </section>
                     <section data-background="./img/pacman_int_overflow.jpg"></section>
                     <section>
                         <h3>Plein d'utilitaires!</h3>
-                        <pre class="fragment"><code class="hljs js center">Int8Array, Float32Array, Uint8ClampedArray, Uint32Array, ...</code></pre>
-                        <pre class="fragment"><code class="hljs js center">new Uint8Array(buffer, 2, 4);</code></pre>
-                        <!--pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre-->
-                        <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 352);</code></pre>
+                        <p class="fragment">Int8Array, Float32Array, Uint8ClampedArray, Uint32Array, ...</p>
+                        <pre class="fragment bigCode"><code class="hljs js center">new Uint8Array(buffer, 2, 4);</code></pre>
+                        <pre class="fragment bigCode"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
+                        <pre class="fragment bigCode"><code class="hljs js center">ArrayBuffer.slice(0, 352);</code></pre>
                     </section>
-                    <!--section data-background="./img/troll.jpg">
+                    <section data-background="./img/troll.jpg">
                         <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
-                        <pre><code class="hljs php center">$binary = pack("C*", 12, 255);
+                        <pre class="bigCode"><code class="hljs php center">$binary = pack("C*", 12, 255);
 $values = unpack("C*", $binary);</code></pre>
-                    </section-->
+                    </section>
                 </section>
                 <section>
                     <section>
@@ -495,7 +475,7 @@ socket.send(buffer);
 socket.on('message', (event) => { const buffer = event.data; })</code></pre>
                     </section>
                 </section>
-                <section>
+                <section data-state="demo-end">
                     <section>
                         <h2>La spec Nifti-1</h2>
                     </section>
@@ -540,66 +520,48 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                     </section>
                     <section>
                         <h3>Body à partir de l'octet 352</h3>
-                        <p>Suite de voxel où 1 voxel = 1 entier.</p>
+                        <p>Suite de voxel.</p>
                     </section>
                     <section>
-                        <pre><code class="hljs js">const size = 352 + (length * width * depth) * (bitPerVoxel / 8);</code></pre>
-                        <p>46 137 696 octets</p>
-                        <p>46,1 Mo</p>
+                        <pre><code class="hljs js center">const size = 352 + (length * width * depth) * (bitPerVoxel / 8);</code></pre>
+                        <p class="fragment">11 534 336 voxels</p>
+                        <p class="fragment">46 137 696 octets = 46,1 Mo</p>
                     </section>
                     <section>
-                        <h4>Manipuler le body</h4>
-                        <pre><code class="hljs js center">const body = new Float32Array(buffer, 352); </code></pre>
-                        <!-- Analogie du livre:
-                        soit un livre dont chaque ligne contient le même nombre de mot et chaque page le même nombre de ligne.
-                        Le 3ème mot de la ligne 5 de la page 127;
-                        const mot = numero + ligne * motParLigne + page * motParPage;
-                        motParPage = motParPage * ligneParPage;
-                        -->
+                        <h4>Lire le body</h4>
+                        <pre class="bigCode"><code class="hljs js">const body = new Float32Array(buffer, 352); </code></pre>
+                        <pre class="fragment"><code class="hljs js">function getVoxelValue(x, y, z) {
+    const index = x + (y * width) + (z * width * height);
+
+    return body[index];
+}</code></pre><!-- 11 534 336 cases ! -->
                     </section>
-                    <!--section data-state="demo-end">
-                        <p>Où se trouve l'information ?</p>
-                        <pre><code class="hljs js">function getIndex(x, y, z) {
-    return x + y * width + z * (width * height);
+                    <section>
+                        <h4>Créer une image</h4>
+                        <pre><code class="hljs js">const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+const slice = new ImageData(width, height);</code></pre>
+                    </section>
+                    <section>
+                        <h4>Remplir l'image</h4>
+                        <pre><code class="hljs js">function setPixelValue(x, y, intensity) {
+    const index = 4 * (x + y * width);
+    const value = Math.round(intensity * 255);
+
+    slice.data.fill([value, value, value, 255], index); // R, G, B, A
 }</code></pre>
-                        <p style="font-size: 0.75em;">numero + ligne &times; motParLigne + page &times; (motParLigne &times; ligneParPage)</p>
-                        <!- -pre class="fragment none center">[0,0,0][1,0,0][2,0,0]
-[0,1,0][1,1,0][2,1,0]
-[0,2,0][1,2,0][2,2,0]
-
-[0,0,1][1,0,1][2,0,1]
-[0,1,1][1,1,1][2,1,1]
-[0,2,1][1,2,1][2,2,1]
-
-[0,0,2][1,0,2][2,0,2]
-[0,1,2][1,1,2][2,1,2]
-[0,2,2][1,2,2][2,2,2]</pre- ->
-                    </section-->
-                    <section data-background-iframe="./demo/" data-state="demo">
-                        <span class="fragment"></span>
-                        <a class="fragment url" href="https://demo.tom32i.fr/" target="_blank">
-                           demo.tom32i.fr
-                        </a>
+                        <pre class="bigCode fragment"><code class="hljs js">setPixelValue(50, 100, getVoxelValue(50, 100, 32));</code></pre></code></pre>
                     </section>
-                    <!--section>
-                        Explication lecture ?
-                        - read buffer
-                        - Dataview: get info du header
-                        - UintArray: body
-                        - Calcul de la slice
-                        - Création de l'image
-                    </section-->
-                    <!--section>
-                        Explication écriture ?
-                        - create buffer
-                        - Dataview: set info du header
-                        - UintArray: body
-                        - Calcul de la slice
-                        - Création de l'image
-                    </section-->
-                    <!--section>
-                        Demo dans slicer ?
-                    </section-->
+                    <section>
+                        <h4>Afficher l'image</h4>
+                        <pre class="bigCode"><code class="hljs js">context.putImageData(slice);</code></pre>
+                    </section>
+                </section>
+                <section data-background-iframe="./demo/" data-state="demo">
+                    <span class="fragment"></span>
+                    <a class="fragment url" href="https://demo.tom32i.fr/" target="_blank">
+                       demo.tom32i.fr
+                    </a>
                 </section>
                 <section data-state="demo-end">
                     <section>
@@ -609,13 +571,13 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <h2 class="emoji">🏋️</h2>
                         <h3>Le poids</h3>
 
-                        <div>
-                            <h4>Json: <small style="vertical-align: middle;">54 octets (54 caractère)</small></h4>
+                        <div class="fragment">
+                            <h4>Json: <small class="fragment" style="vertical-align: middle;">54 octets</small></h4>
                             <pre><code class="hjs json center">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
                         </div>
 
                         <div class="fragment">
-                            <h4>Binaire: <small style="vertical-align: middle;">6 octets (1 + 1 + 2 + 2)</small></h4>
+                            <h4>Binaire: <small class="fragment" style="vertical-align: middle;">6 octets</small></h4>
                             <pre><code class="hjs center">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
                         </div>
                     </section>
@@ -715,7 +677,7 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 }
             }
 
-            function db(x) { return ('0').repeat(8 - x.toString(2).length) + x.toString(2); }
+            function db(x, bitLength = 8) { return ('0').repeat(bitLength - x.toString(2).length) + x.toString(2); }
             function bd(x) { return parseInt(x.toString(), 2); }
 
             if (window.location.search.match(/print-pdf/gi)) {

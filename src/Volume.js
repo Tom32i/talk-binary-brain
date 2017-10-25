@@ -113,15 +113,13 @@ class Volume {
         for (let i = 0, row = 0; row < height; row++) {
             const zyOffset = zOffset + (height - row) * offsetHeight;
 
-            for (let col = 0; col < width; col++) {
+            for (let col = 0; col < width; col++, i+=4) {
                 const zyxOffset = zyOffset + (width - col) * offsetWidth;
                 const value = this.body[zyxOffset];
                 const color = Math.round((value / Volume.MAX) * 255);
 
-                buffer.data[i++] = color; // red
-                buffer.data[i++] = color; // green
-                buffer.data[i++] = color; // blue
-                buffer.data[i++] = 255;   // alpha
+                buffer.data.fill(color, i, i+3); // Red, Green, Blue
+                buffer.data.set([255], i+3); // Alpha
             }
         }
 
@@ -129,9 +127,9 @@ class Volume {
     }
 
     getXYZOffset(x, y, z) {
-        const offsetX = /*this.getOffset('x'); /*/ 1;
-        const offsetY = /*this.getOffset('y'); /*/ 1 * this.x;
-        const offsetZ = /*this.getOffset('z'); /*/ 1 * this.x * this.y;
+        const offsetX = 1;
+        const offsetY = 1 * this.x;
+        const offsetZ = 1 * this.x * this.y;
         const index = x * offsetX + y * offsetY + z * offsetZ;
 
         console.log('[%s,%s,%s] (%s) = %s', x, y, z, index, this.body[index]);
@@ -151,12 +149,12 @@ class Volume {
         list.splice(list.indexOf(axis), 1);
 
         return {
-          length: this[axis],
-          width: this[list[0]],
-          height: this[list[1]],
-          offset: this.getOffset(axis),
-          offsetWidth: this.getOffset(list[0]),
-          offsetHeight: this.getOffset(list[1]),
+            length: this[axis],
+            width: this[list[0]],
+            height: this[list[1]],
+            offset: this.getOffset(axis),
+            offsetWidth: this.getOffset(list[0]),
+            offsetHeight: this.getOffset(list[1]),
         };
     }
 

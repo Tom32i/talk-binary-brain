@@ -4,7 +4,6 @@
 
 install:
 	yarn install
-	cd live && yarn install
 
 ## Install Ansible dependencies
 install-roles:
@@ -12,10 +11,14 @@ install-roles:
 
 ## Build static files
 build:
-	cd live && yarn build
+	yarn build
 
-serve:
-	cd live && yarn start
+watch:
+	yarn start
+
+## Run locally
+run:
+	open http://localhost:8000; php -S 0.0.0.0:8000 -t .
 
 ##########
 # Deploy #

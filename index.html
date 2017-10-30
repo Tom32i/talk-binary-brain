@@ -19,27 +19,29 @@
                 box-shadow: none;
             }
 
+            .reveal section .talk-title {
+                color: white;
+                text-shadow: 0 0 0.5em #000000, 0 0 1em #000000;
+                font-size: 5em;
+            }
+
+            .reveal section .talk-title small {
+                font-size: 0.6em;
+                text-transform: lowercase;
+            }
+
             .reveal section .ipad {
+                margin: 0;
+                padding: 0;
+                width: 20em;
+                height: 15em;
+                font-size: 32px;
                 border: 1em solid black;
                 border-left-width: 2em;
                 border-right-width: 2em;
-                background: white;
-                box-shadow: none;
                 border-radius: 1em;
-                overflow: visible;
-                padding: 0em;
-                width: 20em;
-                height: 15em;
-                margin: 1em auto 0;
+                background: #333333;
                 box-shadow: 0 0.1em 0 0 #333333;
-            }
-
-            .reveal section .ipad img {
-                margin: 0;
-                width: 100%;
-                height: auto;
-                max-width: 100%;
-                max-height: 100%;
             }
 
             .reveal section code.multiligne {
@@ -62,6 +64,18 @@
                 font-size: 2em;
             }
 
+            .reveal section .pixel {
+                width: 2em;
+                height: 2em;
+                display: inline-block;
+            }
+
+            .reveal section .pixel-big {
+                width: 4em;
+                height: 4em;
+                display: inline-block;
+            }
+
             .reveal section .mutted {
                 color: #888888;
             }
@@ -70,10 +84,57 @@
                 text-align: center;
             }
 
-            /*.reveal section iframe {
-                position: absolute;
-                z-index: 10;
-            }*/
+            .reveal section pre {
+                font-size: 0.66em;
+            }
+
+            .reveal section pre.bigCode {
+                font-size: 0.8em;
+            }
+            .reveal section pre.bigCode code {
+                text-align: center;
+            }
+
+            .reveal section .binary-chain {
+                font-size: 0.8em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .reveal section .binary-chain > .fragment.visible {
+                flex: 1;
+            }
+
+            .reveal section .split {
+                display: flex;
+                align-items: center;
+            }
+
+            .reveal section .split > * {
+                flex: 1;
+            }
+
+            .reveal section .split.pixels {
+                margin-top: 2em;
+                justify-content: space-around;
+            }
+
+            .reveal section .split.pixels > .pixel {
+                flex: 0;
+                flex-basis: 4em;
+                height: 4em;
+            }
+
+            .reveal section .split.pixels > .pixel-big {
+                flex: 0;
+                flex-basis: 6em;
+                height: 6em;
+            }
+
+            .reveal section .red { color: #ff2c2d; }
+            .reveal section .green { color: #17ff2e; }
+            .reveal section .blue { color: #1b91ff; }
 
             .reveal section .badge {
                 color: white;
@@ -86,6 +147,7 @@
 
             .reveal section .row {
                 display: flex;
+                align-items: center;
             }
 
             .reveal section .row .column {
@@ -99,6 +161,35 @@
                 height: 2em;
                 width: 250%;
                 margin-left: -75%;
+            }
+
+            .reveal section .source {
+                display: flex;
+                justify-content: center;
+            }
+
+            .reveal section .source > .source-emoji {
+                flex: 0;
+            }
+
+            .reveal section .source > a {
+                text-align: left;
+                flex-basis: 10em;
+                margin-left: 0.6em;
+            }
+
+            .reveal section .url {
+                color: white;
+                letter-spacing: 0.2em;
+            }
+
+            .reveal section .avatar {
+                border: none;
+                box-shadow: none;
+                border-radius: 50%;
+                max-width: 25%;
+                display: block;
+                margin: 0 auto;
             }
 
             .reveal section .marquee > * {
@@ -118,63 +209,80 @@
                 from { transform: translateX(0%); }
                 to { transform: translateX(-100%); }
             }
+
+            @media print {
+                body, html, .reveal .slide-background {
+                    background-color: #f7f3d8;
+                }
+
+                .reveal section .ipad {
+                    font-size: 32px;
+                }
+
+                .reveal iframe {
+                    background-color: black;
+                }
+
+                .reveal section .talk-title {
+                    text-shadow: 0 0 20px black;
+                }
+            }
         </style>
         <meta but-du-talk="Monter que manipuler des données binaire en JS c'est à portée de main.">
     </head>
     <body>
         <div class="reveal">
             <div class="slides">
-                <section data-background="#000000">
-                    <h1 style="text-shadow: none; color: white;">The Binary Brain</h1>
-                    <img class="none" src="./img/intro.jpg">
-                </section>
-                <section>
-                    <section>
-                        <h2>Thomas, Web Developer.</h2>
-                    </section>
+                <section data-background="./img/intro.jpg">
+                    <h1 class="talk-title">
+                        The Binary Brain
+                    </h1>
                 </section>
                 <section>
                     <section data-background="#5dbab6" style="color: white;">
-                        <h2 style="color: white;">SPINE</h2>
-                        <p>Université de Bordeaux<br/>&times;<br/>Harvard Medical School</p>
+                        <h2 style="color: white;">Université de Bordeaux<br/>&times;<br/>Harvard Medical School</h2>
                         <!-- Besoins du serious game: dessiner dans le cerveau humain -->
                         <!-- Crowdsourcer la recherche en neurologie -->
                     </section>
-                    <section data-background="./img/spine-3.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2>
-                    </section>
-                    <section data-background="./img/spine-2.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2>
+                    <section data-background="#5dbab6" style="color: white;">
+                        <img class="none ipad" src="./img/spine-game.png">
+                        <p class="fragment">#seriousgame #tablette #recherche #crowdsourcing #cerveau</p>
                     </section>
                     <section data-background="./img/spine-1.jpg">
-                        <h2 style="color: white; text-shadow: 0 0 5px black;">#seriousGame</h2>
+                        <!--h2 style="color: white; text-shadow: 0 0 5px black;">#SeriousGame</h2-->
                     </section>
-                    <section data-background="#5dbab6" style="color: white;">
-                        <quote>Analyser des IRM du cerveau<br/>par le grand public sur tablette</quote>
-                        <div class="ipad"><img class="none" src="./img/spine-game.png"></div>
+                    <section data-background="./img/spine-2.jpg">
+                        <!--h2 style="color: white; text-shadow: 0 0 5px black;">#Crowdsourcing</h2-->
+                    </section>
+                    <section data-background="./img/spine-3.jpg">
+                        <!--h2 style="color: white; text-shadow: 0 0 5px black;">#Recherche</h2-->
                     </section>
                 </section>
                 <section>
+                    <h2>💀📲</h2>
+                    <quote>Parcourir le cerveau humain dans le navigateur.</quote>
+                    <!-- Pourquoi ? Comment ? Qu'est-ce qu'on a appris ? -->
+                </section>
+                <section>
                     <section>
-                        <h2>IRM</h2>
+                        <h2 style="font-size: 4em;">IRM</h2>
                         <small>Imagerie par Résonance Magnétique</small>
                     </section>
                     <section data-background="./img/IRM.jpg"></section>
                     <section data-background="./img/IRM_result.jpg"></section>
                     <section>
                         <h2>Image Voxel</h2>
-                        <img class="none" src="./img/rubik.png" style="max-height: 500px;">
+                        <img class="none" src="./img/minecraft.png" style="max-height: 500px;">
                         <!-- CSS 3D grid? -->
                     </section>
                     <section>
-                        <h2>Format Nifti-1</h2>
-                        <p>my_brain.nii</p>
+                        <span class="emoji">💾</span>
+                        <p>my_brain.nii<br/><span class="mutted">Nifti-1</span></p>
                         <!-- Knight of ni -->
                     </section>
                     <section>
                         <h2><span class="emoji">🤖</span></h2>
                         <div class="marquee"><p id="binary"></p></div>
-                        <!-- Animation binaire qui se remplie ? -->
                     </section>
                 </section>
                 <section>
@@ -182,68 +290,24 @@
                         <h2>Le binaire</h2>
                     </section>
                     <section>
-                        <h3 style="letter-spacing: 10px;">0<span class="mutted">,</span>  1<span class="mutted">,</span>  10<span class="mutted">,</span>  11<span class="mutted">,</span>  100<span class="mutted">,</span>  101</h3>
+                        <h3 style="letter-spacing: 10px;">1<span class="mutted">,</span>  10<span class="mutted">,</span>  11<span class="mutted">,</span>  100<span class="mutted">,</span>  101</h3>
                     </section>
                     <section>
                         <h3 class="">1 bit <span class="mutted"> = </span> 0 <span class="mutted">|</span> 1</h3>
-                        <h3 class="fragment">1 octet <span class="mutted">=</span> 8 bits <span class="mutted"> = </span> 10010110</h3>
-                        <h3 class="fragment">1 Ko <span class="mutted">=</span> 1024 octets <span class="mutted">=</span> 8192 bits</h3>
-                        <!--h3 class="fragment">1 GoT <span class="mutted">=</span> 536,870,912 octets</h3-->
+                        <h3 class="fragment">8 bits <span class="mutted">=</span> 1 octet <span class="mutted">=</span> 10010110</h3>
+                        <h3 class="fragment">1024 octets <span class="mutted">=</span>1 Ko <span class="mutted">=</span> 8192 bits</h3>
                     </section>
                     <section data-background="./img/GOT.jpg">
                         <h3 style="color: white;">536,870,912 octets</h3>
                     </section>
                 </section>
                 <section>
-                    <section>
-                        <h2>Representer l'information</h2>
+                    <section data-background="./img/binary_wall.jpg">
+                        <h2 class="fragment" style="color: white;">Representer l'information</h2>
                     </section>
                     <section>
                         <h3>Numériser votre information</h3>
-                        <p>1 infos => 1 nombre</p>
-                    </section>
-                    <section>
-                        <h3>Stocker les nombres en binaire</h3>
-                        <p>base 10 => base 2</p>
-                    </section>
-                    <section>
-                       <h3>Représenter une image en binaire (bitmap)</h3>
-                       <ul>
-                            <li class="fragment">Une liste de pixel</li>
-                            <li class="fragment">1 pixel = 1 couleur</li>
-                            <li class="fragment">1 couleur = 3 entiers de 0 à 255 (RVB)</li>
-                       </ul>
-                    </section>
-                    <section>
-                        <quote>16 million couleurs</quote>
-                        <p>256 * 256 * 256 = 16,777,216</p>
-                    </section>
-                    <section>
-                        <h3>Entier sur 8 bit</h3>
-                        <p>00000000 = 0</p>
-                        <p>11111111 = 255</p>
-                        <p class="fragment">256 valeurs possibles</p>
-                    </section>
-                    <section>
-                        <h3>Entier sur 16 bit</h3>
-                        <p>0000000000000000 = 0</p>
-                        <p>1111111111111111 = 65 535</p>
-                        <p class="fragment">65 536 valeurs possibles</p>
-                    </section>
-                    <!--section>
-                        <h3>1 bit pour 1 entier signé:</h3>
-                        <p>0 0000000 = -128</p>
-                        <p>1 1111111 = +127</p>
-                    </section-->
-                    <section data-background="#222222" style="color: white;">
-                        <!-- Une donnée binaire n'a pas de format a priori -->
-                        <!-- example d'un fichier lisible dans plusieurs format ?! -->
-                        <code style="font-size: 0.8em;">
-                            <span class="fragment highlight-red">00110010</span><span class="fragment highlight-blue">01000101</span><span class="fragment highlight-green">0000010101001110</span><span class="fragment highlight-red">01010110</span><span class="fragment highlight-blue">10101011</span>
-                        </code>
-                        <p class="fragment">
-                            <span class="fragment highlight-red">50</span><span class="fragment highlight-blue">69</span><span class="fragment highlight-green">1358</span><span class="fragment highlight-red">86</span><span class="fragment highlight-blue">171</span>
-                        </p>
+                        <img class="none, fragment" src="./img/matrix.jpg">
                     </section>
                     <section data-background="#222222" style="color: white;">
                         <h3 style="color: white;">Numéro de sécurité sociale</h3>
@@ -252,7 +316,67 @@
                         </p>
                     </section>
                     <section>
-                        <quote>Une chaine binaire n'a pas de signification en soit.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
+                        <h3>Stocker les nombres en binaire</h3>
+                        <p>base 10 👉 base 2</p>
+                    </section>
+                    <section>
+                       <h3>Représenter une image en binaire</h3>
+                    </section>
+                    <section>
+                        <div class="row" style="align-items: center; justify-content: space-around;">
+                            <img class="column none" style="flex: 0;" src="./img/doomguy.jpg">
+                            <ul class="column" style="flex: 0; flex-basis: 13em; text-align: left;">
+                                <li class="fragment">Une grille de pixel</li>
+                                <li class="fragment">1 pixel = 1 couleur</li>
+                                <li class="fragment">1 couleur = 3 valeurs <span class="red">R</span><span class="green">V</span><span class="blue">B</span></li>
+                                <li class="fragment">1 valeur = 1 entier de 0 à 255</li>
+                            </ul>
+                       </div>
+                    </section>
+                    <section>
+                        <h3>Entier sur 8 bit</h3>
+                        <p>00000000 = 0</p>
+                        <p>11111111 = 255</p>
+                    </section>
+                    <section>
+                        <p>3 x 8 bits = 24 bits<br/>16,777,216 valeurs possibles</p>
+                        <img class="none fragment" src="./img/windows_24bit.gif">
+                    </section>
+                    <!--section>
+                        <h3>1 bit pour 1 entier signé:</h3>
+                        <p>0 0000000 = -128</p>
+                        <p>1 1111111 = +127</p>
+                    </section-->
+                    <section data-background="#222222" style="color: white;">
+                        <code class="binary-chain">
+                            <span class="fragment highlight-red">11101111</span><span class="fragment highlight-green">10010010</span><span class="fragment highlight-blue">00011100</span><span class="fragment highlight-red">10001011</span><span class="fragment highlight-green">01010000</span><span class="fragment highlight-blue">11111001</span>
+                        </code>
+                        <p class="fragment split">
+                            <span class="red">239</span><span class="green">146</span><span class="blue">28</span><span class="red">139</span><span class="green">80</span><span class="blue">249</span>
+                        </p>
+                        <p class="fragment split pixels">
+                            <span class="pixel" style="background-color: rgb(239, 146, 28);"></span>
+                            <span class="pixel" style="background-color: rgb(139, 80, 249);"></span>
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Entier sur 16 bit</h3>
+                        <p>0000000000000000 = 0</p>
+                        <p>1111111111111111 = 65535</p>
+                    </section>
+                    <section data-background="#222222" style="color: white;">
+                        <code class="binary-chain">
+                            <span class="fragment highlight-red">1110111110010010</span><span class="fragment highlight-green">0001110010001011</span><span class="fragment highlight-blue">0101000011111001</span>
+                        </code>
+                        <p class="fragment split">
+                            <span class="red">61330</span><span class="green">7307</span><span class="blue">20729</span>
+                        </p>
+                        <p class="fragment split pixels">
+                            <span class="pixel-big" style="background-color: rgb(239, 28, 81);"></span>
+                        </p>
+                    </section>
+                    <section>
+                        <quote>Une chaine binaire n'a pas de signification en soi.<!--<br/>Il faut connaitre son format pour savoir quelle informations elle contient et où celles-ci se situent dans la chaine.--></quote>
                     </section>
                     <section data-background="./img/adn.jpg">
                         <!--p class="fragment">1 bit -> 1 nucléotide (base 4 adénine (A), la thymine (T), la cytosine (C) et la guanine (G).</p-->
@@ -264,14 +388,14 @@
                     </section>
                     <section>
                         <h3>ArrayBuffer</h3>
-<pre><code class="hljs js center">const buffer = new ArrayBuffer(byteLength)</code></pre>
+<pre class="bigCode"><code class="hljs js">const buffer = new ArrayBuffer(byteLength);</code></pre>
                         <p class="blocks fragment">
                             <span class="block">001100100100010100000101010011100101011010101011</span>
                         </p>
                     </section>
                     <section>
                         <h3>TypedArrays</h3>
-<pre><code class="hljs js center">const view = new Uint8Array(buffer)</code></pre>
+<pre class="bigCode"><code class="hljs js">const view = new Uint8Array(buffer);</code></pre>
                         <p class="blocks fragment">
                             <span class="block">00110010</span>
                             <span class="block">01000101</span>
@@ -280,23 +404,22 @@
                             <span class="block">01010110</span>
                             <span class="block">10101011</span>
                         </p>
-<pre class="fragment"><code class="hljs js center">[50, 69, 5, 78, 86, 171]</code></pre>
-<!--pre class="fragment"><code class="hljs js">view[2] = 50;</code></pre-->
+<pre class="fragment bigCode"><code class="hljs js center">[50, 69, 5, 78, 86, 171]</code></pre>
                     </section>
                     <section>
-<pre><code class="hljs js center">const view = new Uint16Array(buffer)</code></pre>
+<pre class="bigCode"><code class="hljs js">const view = new Uint16Array(buffer);</code></pre>
                         <p class="blocks fragment">
                             <span class="block">0011001001000101</span>
                             <span class="block">0000010101001110</span>
                             <span class="block">0101011010101011</span>
                         </p>
-<pre class="fragment"><code class="hljs js center">[12869, 1358, 22187]</code></pre>
+<pre class="fragment bigCode"><code class="hljs js center">[12869, 1358, 22187]</code></pre>
                     </section>
                     <section>
                         <h3>Ecriture</h3>
-<pre><code class="hljs js center">view[0] = 255;</code></pre>
+<pre class="bigCode" style="width: 50%;"><code class="hljs js center">view[0] = 255;</code></pre>
                         <p class="blocks fragment">
-                            <span class="block fragment highlight-red">11111111</span>
+                            <span class="block red">11111111</span>
                             <span class="block">01000101</span>
                             <span class="block">00000101</span>
                             <span class="block">01001110</span>
@@ -305,21 +428,22 @@
                         </p>
                     </section>
                     <section>
-                        <h3>Attention au dépassements !</h3>
-<pre><code class="hljs js center">view[0] = 546;</code></pre>
+                        <h3>Attention aux dépassements !</h3>
+<pre class="bigCode" style="width: 50%;"><code class="hljs js center">view[0] = 546;</code></pre>
                         <p>546 = 10<span class="fragment highlight-red">00100010</span></p>
-<pre class="fragment"><code class="hljs js center">view[0] === 34;</code></pre>
+<pre class="fragment bigCode" style="width: 50%;"><code class="hljs js center">view[0] === 34;</code></pre>
                     </section>
+                    <section data-background="./img/pacman_int_overflow.jpg"></section>
                     <section>
                         <h3>Plein d'utilitaires!</h3>
-                        <pre class="fragment"><code class="hljs js center">Int8Array, Float32Array, Uint8ClampedArray, Uint32Array, ...</code></pre>
-                        <pre class="fragment"><code class="hljs js center">new Uint8Array(buffer, 2, 4);</code></pre>
-                        <pre class="fragment"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
-                        <pre class="fragment"><code class="hljs js center">ArrayBuffer.slice(0, 348);</code></pre>
+                        <p class="fragment">Int8Array, Float32Array, Uint8ClampedArray, Uint32Array, ...</p>
+                        <pre class="fragment bigCode"><code class="hljs js center">new Uint8Array(buffer, 2, 4);</code></pre>
+                        <pre class="fragment bigCode"><code class="hljs js center">new DataView(buffer).setInt16(42, 1337);</code></pre>
+                        <pre class="fragment bigCode"><code class="hljs js center">ArrayBuffer.slice(0, 352);</code></pre>
                     </section>
                     <section data-background="./img/troll.jpg">
                         <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
-                        <pre><code class="hljs php center">$binary = pack("C*", 12, 255);
+                        <pre class="bigCode"><code class="hljs php center">$binary = pack("C*", 12, 255);
 $values = unpack("C*", $binary);</code></pre>
                     </section>
                 </section>
@@ -332,7 +456,9 @@ $values = unpack("C*", $binary);</code></pre>
 <pre><code class="hljs js">const request = new XMLHttpRequest();
 request.responseType = 'arraybuffer';
 request.open('GET', 'http://my.brain.com/my_brain.nii');
-request.addEventListener('load', () => request.response);
+request.addEventListener('load', () => {
+    const buffer = request.response;
+});
 request.send();</code></pre>
                     </section>
                     <section>
@@ -349,12 +475,12 @@ socket.send(buffer);
 socket.on('message', (event) => { const buffer = event.data; })</code></pre>
                     </section>
                 </section>
-                <section>
+                <section data-state="demo-end">
                     <section>
                         <h2>La spec Nifti-1</h2>
                     </section>
                     <section>
-                        <h3>Header sur 348 octets</h3>
+                        <h3>Header sur 352 octets</h3>
                         <table>
                             <tbody>
                                 <tr class="fragment">
@@ -389,67 +515,53 @@ socket.on('message', (event) => { const buffer = event.data; })</code></pre>
 const width  = header.getUint16(42); // 256
 const height = header.getUint16(44); // 256
 const depth  = header.getUint16(46); // 176
+const dataType = header.getUint16(70); // 16 (Float32Array)
 const bitPerVoxel = header.getUint16(72); // 32</code></pre>
-                        <div class="fragment">
-                            <pre><code class="hljs js">const size = 352 + length * width * depth * bitPerVoxel / 8;</code></pre>
-                            <p>46,1 Mo</p>
-                        </div>
                     </section>
                     <section>
                         <h3>Body à partir de l'octet 352</h3>
-                        <p>Suite de voxel où 1 voxel = 1 entier.</p>
+                        <p>Suite de voxel.</p>
                     </section>
                     <section>
-                        <h4>Manipuler le body</h4>
-                        <p>32 bit par voxel donc:</p>
-                        <pre><code class="hljs js center">const body = new Float32Array(buffer, 352); </code></pre>
-                        <!-- Analogie du livre:
-                        soit un livre dont chaque ligne contient le même nombre de mot et chaque page le même nombre de ligne.
-                        Le 3ème mot de la ligne 5 de la page 127;
-                        const mot = numero + ligne * motParLigne + page * motParPage;
-                        motParPage = motParPage * ligneParPage;
-                        -->
+                        <pre><code class="hljs js center">const size = 352 + (length * width * depth) * (bitPerVoxel / 8);</code></pre>
+                        <p class="fragment">11 534 336 voxels</p>
+                        <p class="fragment">46 137 696 octets = 46,1 Mo</p>
                     </section>
-                    <section data-state="demo-end">
-                        <p>Où se trouve l'information ?</p>
-                        <pre><code class="hljs js">function getIndex(x, y, z) {
-    return x + y * width + z * (width * height);
+                    <section>
+                        <h4>Lire le body</h4>
+                        <pre class="bigCode"><code class="hljs js">const body = new Float32Array(buffer, 352); </code></pre>
+                        <pre class="fragment"><code class="hljs js">function getVoxelValue(x, y, z) {
+    const index = x + (y * width) + (z * width * height);
+
+    return body[index];
+}</code></pre><!-- 11 534 336 cases ! -->
+                    </section>
+                    <section>
+                        <h4>Créer une image</h4>
+                        <pre><code class="hljs js">const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+const slice = new ImageData(width, height);</code></pre>
+                    </section>
+                    <section>
+                        <h4>Remplir l'image</h4>
+                        <pre><code class="hljs js">function setPixelValue(x, y, intensity) {
+    const index = 4 * (x + y * width);
+    const value = Math.round(intensity * 255);
+
+    slice.data.fill([value, value, value, 255], index); // R, G, B, A
 }</code></pre>
-                        <p style="font-size: 0.75em;">numero + ligne &times; motParLigne + page &times; (motParLigne &times; ligneParPage)</p>
-                        <!--pre class="fragment none center">[0,0,0][1,0,0][2,0,0]
-[0,1,0][1,1,0][2,1,0]
-[0,2,0][1,2,0][2,2,0]
-
-[0,0,1][1,0,1][2,0,1]
-[0,1,1][1,1,1][2,1,1]
-[0,2,1][1,2,1][2,2,1]
-
-[0,0,2][1,0,2][2,0,2]
-[0,1,2][1,1,2][2,1,2]
-[0,2,2][1,2,2][2,2,2]</pre-->
+                        <pre class="bigCode fragment"><code class="hljs js">setPixelValue(50, 100, getVoxelValue(50, 100, 32));</code></pre></code></pre>
                     </section>
-                    <section data-background-iframe="./demo" data-state="demo">
-                        <span class="fragment"></span>
+                    <section>
+                        <h4>Afficher l'image</h4>
+                        <pre class="bigCode"><code class="hljs js">context.putImageData(slice);</code></pre>
                     </section>
-                    <!--section>
-                        Explication lecture ?
-                        - read buffer
-                        - Dataview: get info du header
-                        - UintArray: body
-                        - Calcul de la slice
-                        - Création de l'image
-                    </section-->
-                    <!--section>
-                        Explication écriture ?
-                        - create buffer
-                        - Dataview: set info du header
-                        - UintArray: body
-                        - Calcul de la slice
-                        - Création de l'image
-                    </section-->
-                    <!--section>
-                        Demo dans slicer ?
-                    </section-->
+                </section>
+                <section data-background-iframe="./demo/" data-state="demo">
+                    <span class="fragment"></span>
+                    <a class="fragment url" href="https://demo.tom32i.fr/" target="_blank">
+                       demo.tom32i.fr
+                    </a>
                 </section>
                 <section data-state="demo-end">
                     <section>
@@ -459,14 +571,14 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <h2 class="emoji">🏋️</h2>
                         <h3>Le poids</h3>
 
-                        <div>
-                            <h4>Json: <small style="vertical-align: middle;">54 octets (54 caractère)</small></h4>
-                            <pre><code class="hjs json">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
+                        <div class="fragment">
+                            <h4>Json: <small class="fragment" style="vertical-align: middle;">54 octets</small></h4>
+                            <pre><code class="hjs json center">{ "event": "position", "id": 19, "x": 125, "y": 158 }</code></pre>
                         </div>
 
                         <div class="fragment">
-                            <h4>Binaire: <small style="vertical-align: middle;">6 octets (1 + 1 + 2 + 2)</small></h4>
-                            <pre><code class="hjs">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
+                            <h4>Binaire: <small class="fragment" style="vertical-align: middle;">6 octets</small></h4>
+                            <pre><code class="hjs center">[event sur 1 octet][id sur 1 octet][x sur 2 octets][y sur 2 octets]</code></pre>
                         </div>
                     </section>
                     <section>
@@ -483,8 +595,8 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         <h2 class="emoji">☠️</h2>
                         <h2>Pourquoi c'est chaud ?</h2>
                         <ul>
-                            <li class="fragment">Rigide</li>
                             <li class="fragment">Pas lisible</li>
+                            <li class="fragment">Rigide</li>
                             <li class="fragment">Peu de bug</li>
                         </ul>
                     </section>
@@ -498,21 +610,22 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                         </ul>
                     </section>
                     <section>
-                        <quote>Javascript gère bien le binaire 👌</quote>
+                        <quote style="font-size: 1.6em;">Javascript gère bien le binaire 👌</quote>
                     </section>
                 </section>
                 <section>
-                    <h1>Merci !</h1>
+                    <h1 style="margin-bottom: 0.4em;">Merci !</h1>
                     <div class="row">
                         <div class="column">
-                            <h4>Sources</h4>
-                            <p><a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Specfication nitfi-1</a></p>
-                            <p><a href="https://github.com/Tom32i/binary-brain">Tom32i/binary-brain</a></p>
+                            <h3>Sources</h3>
+                            <p>📖 <a href="https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields">Specfication nitfi-1</a></p>
+                            <p>🐙 <a href="https://github.com/Tom32i/binary-brain">Tom32i/binary-brain</a></p>
                         </div>
                         <div class="column">
-                            <h4>Questions ?</h4>
-                            <p><a href="https://twitter.com/SPINEscience">@Spine</a></p>
-                            <p><a href="https://twitter.com/Tom32i">@Tom32i</a></p>
+                            <a target="_blank" href="https://twitter.com/Tom32i">
+                                <img class="avatar" src="./img/tom32i.png">
+                                <p>@Tom32i</p>
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -527,6 +640,16 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 history: true,
                 overview: false,
                 help: false,
+
+                width: 1280,
+                height: 720,
+
+                // Factor of the display size that should remain empty around the content
+                margin: 0.1,
+
+                // Bounds for smallest/largest possible scale to apply to content
+                minScale: 0.2,
+                maxScale: 1.5,
 
                 dependencies: [
                     { src: './node_modules/reveal.js/plugin/markdown/marked.js' },
@@ -552,6 +675,17 @@ const bitPerVoxel = header.getUint16(72); // 32</code></pre>
                 while (element.innerText.length < length) {
                     element.innerText += Math.random() > 0.5 ? 0 : 1;
                 }
+            }
+
+            function db(x, bitLength = 8) { return ('0').repeat(bitLength - x.toString(2).length) + x.toString(2); }
+            function bd(x) { return parseInt(x.toString(), 2); }
+
+            if (window.location.search.match(/print-pdf/gi)) {
+                const link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = './node_modules/reveal.js/css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild(link);
             }
         </script>
     </body>

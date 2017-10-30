@@ -1,0 +1,43 @@
+html, body {
+    background: #000000;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    background: black;
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+}
+
+.navigator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 1em;
+    padding: 0.1em 0.2em;
+    background: #cccccc;
+    border-radius: 4px;
+    max-width: 20%;
+}
+
+input[type="range"] {
+    display: block;
+    max-width: 100%;
+}
+
+
+@media print {
+    body, html {
+        background-color: transparent;
+    }
+
+    input, .navigator {
+        display: none;
+    }
+}

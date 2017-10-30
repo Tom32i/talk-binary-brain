@@ -5,7 +5,7 @@
 # Dir #
 #######
 
-manala_deploy_dir: /home/tom32i/lab/binary-brain
+manala_deploy_dir: /home/tom32i/binary-brain
 
 ############
 # Releases #
@@ -27,7 +27,6 @@ manala_deploy_strategy_git_version: "{{ lookup('pipe','git rev-parse --abbrev-re
 ##########
 
 manala_deploy_copied:
-  - live/node_modules
   - node_modules
 
 #########

@@ -443,8 +443,13 @@
                     </section>
                     <section data-background="./img/troll.jpg">
                         <h3 style="color: white;">Tableaux typés en PHP ?!</h3>
-                        <pre class="bigCode"><code class="hljs php center">$binary = pack("C*", 12, 255);
-$values = unpack("C*", $binary);</code></pre>
+                        <pre class="bigCode"><code class="hljs php center">// Create a unsigned int
+$buffer = pack("S*", 61330, 7307, 20729);
+// string(6)
+
+// Read as 16bit unsigned integers
+$values = unpack("S*", $buffer);
+// [61330, 7307, 20729]</code></pre>
                     </section>
                 </section>
                 <section>

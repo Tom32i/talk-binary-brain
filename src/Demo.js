@@ -3,6 +3,7 @@ import Request from './Request';
 import Navigator from './Navigator';
 import Cube from './Cube';
 import Canvas from './Canvas';
+import Loader from './Loader';
 
 /**
  * Demo
@@ -18,6 +19,7 @@ class Demo {
         this.onFileLoaded = this.onFileLoaded.bind(this);
         this.onError = this.onError.bind(this);
 
+        this.loader = new Loader();
         this.canvas = new Canvas();
         this.navigator = new Navigator(this.setSlice);
         this.cube = new Cube();
@@ -34,6 +36,8 @@ class Demo {
      */
     onFileLoaded(buffer) {
         this.volume = new Volume(buffer);
+
+        this.loader.detach();
 
         const { x, y, z } = this.volume;
         const voxel = this.volume.bitPerVoxel * 8;

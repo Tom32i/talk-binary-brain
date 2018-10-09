@@ -4,6 +4,10 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 canvas {
@@ -17,20 +21,31 @@ canvas {
 
 .navigator {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     top: 0;
     left: 0;
     margin: 1em;
-    padding: 0.1em 0.2em;
+    padding: 0.2em;
     background: #cccccc;
     border-radius: 4px;
     max-width: 20%;
+}
+
+.loader {
+    position: absolute;
+    height: 66px;
+    width: 66px;
+    border-left: 3px solid white;
+    border-radius: 100%;
+    animation: rotation 1s infinite linear;
 }
 
 input[type="range"] {
     display: block;
     max-width: 100%;
 }
-
 
 @media print {
     body, html {
@@ -40,4 +55,9 @@ input[type="range"] {
     input, .navigator {
         display: none;
     }
+}
+
+@-webkit-keyframes rotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(359deg); }
 }

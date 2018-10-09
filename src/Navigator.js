@@ -11,15 +11,17 @@ class Navigator {
         this.onChange = this.onChange.bind(this);
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
+        this.toggle = this.toggle.bind(this);
         this.next = this.next.bind(this);
 
         this.callback = callback;
         this.x = this.getSlider('x', 100);
         this.y = this.getSlider('y', 100);
         this.z = this.getSlider('z', 100);
+        this.auto = this.getAutoButton();
         this.sliders = [this.x, this.y, this.z];
         this.current = 0;
-        this.interval = 0;
+        this.frame = null;
 
         this.attach();
     }
@@ -35,16 +37,20 @@ class Navigator {
         this.callback(name, value);
     }
 
+    toggle() {
+        this.frame ? this.stop() : this.start();
+    }
+
     start() {
-        if (!this.interval) {
-            this.interval = setInterval(this.next, 1000 / 30);
+        if (!this.frame) {
+            this.frame = requestAnimationFrame(this.next);
         }
     }
 
     stop() {
-        if (this.interval) {
-            this.interval = null;
-            clearInterval(this.interval);
+        if (this.frame) {
+            cancelAnimationFrame(this.frame);
+            this.frame = null;
         }
     }
 
@@ -54,6 +60,8 @@ class Navigator {
      * @return {Function}
      */
     next() {
+        this.frame = requestAnimationFrame(this.next);
+
         const slider = this.sliders[this.current];
         const { value, max } = slider;
         const end = value === max;
@@ -107,6 +115,22 @@ class Navigator {
     }
 
     /**
+     * Get auto button
+     *
+     * @return {Element}
+     */
+    getAutoButton() {
+        const element = document.createElement('button');
+
+        element.type = 'button';
+        element.innerText = 'Auto';
+
+        element.addEventListener('click', this.toggle);
+
+        return element;
+    }
+
+    /**
      * Attach to DOM
      */
     attach() {
@@ -116,6 +140,7 @@ class Navigator {
         container.appendChild(this.x);
         container.appendChild(this.y);
         container.appendChild(this.z);
+        container.appendChild(this.auto);
 
         document.body.appendChild(container);
     }

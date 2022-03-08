@@ -1,33 +1,42 @@
+.SILENT:
+.PHONY: demo
+
 #########
 # Build #
 #########
-
-install:
-	yarn install
 
 ## Install Ansible dependencies
 install-roles:
 	ansible-galaxy install -r ansible/requirements.yml -p ansible/roles -f
 
-## Build static files
-build:
-	yarn build
+# Install dependencies
+install:
+	npm install
 
+# Launch watch
 watch:
-	yarn start
+	npx webpack --watch --mode=development
+
+# Build lib
+build:
+	npx webpack --mode=production
 
 ## Run locally
 run:
 	open http://localhost:8000; php -S 0.0.0.0:8000 -t .
 
+## Run locally
+demo:
+	open http://localhost:8001; php -S 0.0.0.0:8001 -t ./demo
+
 ##########
 # Deploy #
 ##########
 
-## Deploy application (demo)
-deploy@demo:
+## Deploy application (staging)
+deploy@staging:
 	ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=deploy_demo
 
-## Deploy application (prod)
-deploy@prod:
+## Deploy application (production)
+deploy@production:
 	ansible-playbook ansible/deploy.yml --inventory-file=ansible/hosts --limit=deploy_prod
